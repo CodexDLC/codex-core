@@ -8,13 +8,15 @@ dynamic = ["version"]
 description = "Core utilities, schemas and settings for Codex WaaS toolkit"
 readme = { file = "README.md", content-type = "text/markdown" }
 license = { text = "Apache-2.0" }
-requires-python = ">=3.12"
+requires-python = ">=3.10"
 authors = [{ name = "CodexDLC" }]
 keywords = ["pydantic", "core", "toolkit", "waas"]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
     "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Topic :: Software Development :: Libraries :: Application Frameworks",
 ]
@@ -28,6 +30,7 @@ dependencies = [
 Homepage = "https://github.com/codexdlc/codex-core"
 Documentation = "https://codexdlc.github.io/codex-core/"
 Repository = "https://github.com/codexdlc/codex-core"
+Changelog = "https://github.com/codexdlc/codex-core/blob/main/CHANGELOG.md"
 Issues = "https://github.com/codexdlc/codex-core/issues"
 
 [project.optional-dependencies]
@@ -56,7 +59,7 @@ source = "vcs"
 packages = ["src/codex_tools"]
 
 [tool.ruff]
-target-version = "py312"
+target-version = "py310"
 line-length = 120
 
 [tool.ruff.lint]
@@ -64,13 +67,14 @@ select = ["E", "F", "I", "UP", "B", "C4", "SIM"]
 ignore = ["B008"]
 
 [tool.mypy]
-python_version = "3.12"
+python_version = "3.10"
 strict = true
 plugins = ["pydantic.mypy"]
 
 [[tool.mypy.overrides]]
 module = [
-    "loguru.*"
+    "loguru.*",
+    "pydantic_settings.*"
 ]
 ignore_missing_imports = true
 
