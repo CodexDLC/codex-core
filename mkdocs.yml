@@ -1,0 +1,44 @@
+site_name: codex-core
+site_description: Core utilities, schemas and settings for Codex WaaS toolkit
+site_author: Codex Team
+
+theme:
+  name: material
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: indigo
+
+plugins:
+  - search
+  - mkdocs-include-markdown-plugin
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [src]
+          options:
+            show_source: true
+            show_root_heading: true
+
+nav:
+  - Home: index.md
+  - API Reference:
+      - Hub: api/index.md
+      - 🛡️ Core:
+          - Overview: api/core/index.md
+          - Interfaces: api/core/interfaces.md
+          - BaseDTO: api/core/base_dto.md
+      - 🛠️ Common:
+          - Overview: api/common/index.md
+          - Logger: api/common/logger.md
+          - Phone: api/common/phone.md
+          - Cache: api/common/cache.md
+          - Text: api/common/text.md
+      - ⚙️ Settings: api/settings/index.md
+      - 📡 Schemas: api/schemas/index.md
+  - Changelog: changelog.md
