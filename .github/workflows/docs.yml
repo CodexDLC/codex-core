@@ -2,13 +2,17 @@ name: Deploy Docs
 
 on:
   push:
-    branches:
-      - main
-    paths:
-      - 'docs/**'
-      - 'mkdocs.yml'
-      - 'src/**'
-      - 'pyproject.toml'
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version alias to deploy (e.g. 0.x, 1.x)'
+        required: true
+      alias:
+        description: 'Alias (latest, stable, or leave empty)'
+        required: false
+        default: 'latest'
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
@@ -18,7 +22,7 @@ permissions:
 
 jobs:
   deploy:
-    name: Build & Deploy
+    name: Build & Deploy Docs
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -42,5 +46,27 @@ jobs:
           python -m pip install --upgrade pip
           pip install -e ".[docs]"
 
-      - name: Build and Deploy Docs
-        run: mkdocs gh-deploy --force
+      - name: Resolve version alias (tag push)
+        if: github.event_name == 'push'
+        id: version
+        run: |
+          TAG="${GITHUB_REF_NAME}"           # e.g. v1.2.3
+          MAJOR=$(echo "$TAG" | sed 's/^v//' | cut -d. -f1)
+          MINOR=$(echo "$TAG" | sed 's/^v//' | cut -d. -f2)
+          echo "alias=${MAJOR}.x" >> "$GITHUB_OUTPUT"
+
+      - name: Deploy versioned docs (tag push)
+        if: github.event_name == 'push'
+        run: |
+          mike deploy --push --update-aliases "${{ steps.version.outputs.alias }}" latest
+          mike set-default --push latest
+
+      - name: Deploy versioned docs (manual)
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          if [ -n "${{ inputs.alias }}" ]; then
+            mike deploy --push --update-aliases "${{ inputs.version }}" "${{ inputs.alias }}"
+          else
+            mike deploy --push "${{ inputs.version }}"
+          fi
+          mike set-default --push latest

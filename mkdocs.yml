@@ -29,6 +29,11 @@ theme:
     - content.code.copy
     - content.code.annotate
 
+extra:
+  version:
+    provider: mike
+    default: latest
+
 plugins:
   - search
   - include-markdown
