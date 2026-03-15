@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.1] - 2025-02-12
+
+### Added
+- **Declarative PII Registry**: Introduced `PIIRegistry` class in `pii.py` for explicit sensitive field name tracking, complementing the heuristic keyword-based matching.
+- **Enhanced Documentation**:
+  - Comprehensive Google-style docstrings added to all core modules: `log_context`, `loguru_setup`, `phone`, `text`, `base_dto`, `exceptions`, and `settings/base`.
+  - Added localized (EN/RU) documentation links and PyPI/License badges to `README.md`.
+- **Dependency Management**: Added `loguru` as an explicit optional dependency in `pyproject.toml`.
+
+### Changed
+- **PII Masking Logic**: Refined `is_pii_field` and `mask_value` to prioritize explicit registry matches over heuristic keyword search.
+- **Project Configuration**: Updated `.gitignore` to include `.claude/` for modern AI tool support.
+
 ## [0.1.0] - 2024-05-24
 
 ### Added

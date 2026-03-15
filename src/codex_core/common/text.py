@@ -1,17 +1,44 @@
-"""
-codex_core.common.text
-=======================
-Universal tools for working with text.
-Framework-agnostic (does not depend on Django).
+"""Text processing utilities for name normalization, transliteration, and SMS safety.
+
+Framework-agnostic (zero Django / framework dependencies).  All
+functions are pure and stateless: they accept a string, return a
+string, and produce no side effects.
+
+Functions are organized around three distinct concerns:
+
+- **Normalization** — :func:`normalize_name`, :func:`clean_string`
+  produce canonical, whitespace-clean representations.
+- **Transliteration** — :func:`transliterate` converts Cyrillic to
+  Latin for systems that do not support Unicode input.
+- **Sanitization** — :func:`sanitize_for_sms` strips characters
+  illegal or problematic in SMS payloads.
 """
 
 import re
 
 
 def normalize_name(name: str) -> str:
-    """
-    Brings first/last name to a standard form, preserving spaces and hyphens.
-    Example: 'ivan ivanov-petrov' -> 'Ivan Ivanov-Petrov'
+    """Capitalize each word in a personal name, preserving hyphens.
+
+    Collapses repeated whitespace, then title-cases every name
+    segment separated by a space or hyphen while leaving the
+    delimiters unchanged.
+
+    Args:
+        name: Raw name string in any case with arbitrary spacing
+            (e.g. ``"  ivan   ivanov-petrov  "``).
+
+    Returns:
+        Normalized name with each segment capitalized
+        (e.g. ``"Ivan Ivanov-Petrov"``), or an empty string if
+        *name* is falsy.
+
+    Example:
+        ```python
+        normalize_name("ivan ivanov-petrov")  # → "Ivan Ivanov-Petrov"
+        normalize_name("ANNA MÜLLER")          # → "Anna Müller"
+        normalize_name("")                     # → ""
+        ```
     """
     if not name:
         return ""
@@ -29,19 +56,59 @@ def normalize_name(name: str) -> str:
 
 
 def clean_string(text: str) -> str:
-    """Removes extra spaces and invisible characters."""
+    """Collapse multiple whitespace characters into a single space.
+
+    Strips leading / trailing whitespace and replaces any internal
+    sequence of whitespace (spaces, tabs, newlines) with a single
+    ASCII space.  Invisible Unicode whitespace is also collapsed
+    because ``str.split()`` is Unicode-aware.
+
+    Args:
+        text: Raw string that may contain irregular whitespace.
+
+    Returns:
+        Cleaned string with normalized whitespace, or an empty string
+        if *text* is falsy.
+
+    Example:
+        ```python
+        clean_string("  hello\\t  world\\n")  # → "hello world"
+        clean_string("")                       # → ""
+        ```
+    """
     if not text:
         return ""
     return " ".join(text.split())
 
 
 def transliterate(text: str) -> str:
-    """
-    Transliterate Cyrillic characters to Latin equivalents.
+    """Transliterate Cyrillic characters to their Latin equivalents.
 
-    Example::
+    Uses a hard-coded character-level mapping (``str.maketrans``)
+    covering all 33 letters of the Russian alphabet in both cases.
+    Non-Cyrillic characters pass through unchanged.
 
-        transliterate("Привет")  # → "Privet"
+    The mapping follows a simplified scientific transliteration
+    standard (not GOST 7.79-2000) optimised for readability in
+    Latin-script contexts such as SMS gateways and URL slugs.
+
+    Args:
+        text: Input string containing Cyrillic characters.
+
+    Returns:
+        String with each Cyrillic character replaced by its Latin
+        approximation, or an empty string if *text* is falsy.
+
+    Note:
+        ``ъ`` (hard sign) and ``ь`` (soft sign) map to an empty
+        string, reducing the output length relative to the input.
+
+    Example:
+        ```python
+        transliterate("Привет")        # → "Privet"
+        transliterate("Щукин")         # → "Shchukin"
+        transliterate("Hello World")   # → "Hello World"  (passthrough)
+        ```
     """
     if not text:
         return ""
@@ -120,15 +187,42 @@ def transliterate(text: str) -> str:
 
 
 def sanitize_for_sms(text: str, max_length: int = 50) -> str:
-    """
-    Clean string for safe SMS sending.
+    """Produce a safe, length-bounded string suitable for SMS payloads.
 
-    Removes newlines, control characters, and non-safe symbols.
-    Truncates to ``max_length`` (default: 50).
+    Applies two successive regex passes:
 
-    Example::
+    1. Replaces ``\\r``, ``\\n``, ``\\t`` sequences with a single space
+       to eliminate line breaks that most SMS gateways convert to
+       encoding errors.
+    2. Strips all characters outside the set ``[\\w\\s.\\-]``
+       (word characters, spaces, dots, hyphens).
 
-        sanitize_for_sms("Hello\\nWorld!!! <script>", 20)  # → "Hello World script"
+    The result is then truncated to *max_length* characters and
+    stripped of trailing whitespace.
+
+    Args:
+        text: Arbitrary user-supplied or templated string.
+        max_length: Maximum number of characters in the output.
+            Defaults to ``50``, which fits within a single GSM-7
+            SMS segment alongside typical prefix text.
+
+    Returns:
+        Sanitized and truncated string, or an empty string if *text*
+        is falsy.
+
+    Note:
+        Truncation happens *before* the final ``strip()``, so the
+        effective output length may be slightly less than *max_length*
+        when the truncation boundary falls on whitespace.
+
+    Example:
+        ```python
+        sanitize_for_sms("Hello\\nWorld!!! <script>", 20)
+        # → "Hello World script"
+
+        sanitize_for_sms("Appointment at 10:00", 15)
+        # → "Appointment at"
+        ```
     """
     if not text:
         return ""

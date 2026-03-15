@@ -1,20 +1,55 @@
-"""
-codex_tools.common.phone
-========================
-Universal tools for working with phone numbers.
-Framework-agnostic (does not depend on Django).
+"""Utilities for normalizing phone numbers to a canonical digit-only format.
+
+Framework-agnostic (zero Django / framework dependencies).  Suitable
+for use in any Python 3.10+ environment including async workers.
+
+The module intentionally does not validate that the resulting number is
+reachable (no libphonenumber dependency); it only ensures a consistent
+digit-only representation that can be safely stored, compared, and
+passed to SMS / telephony APIs.
 """
 
 
 def normalize_phone(phone: str, default_country: str = "49") -> str:
-    """
-    Normalizes a phone number by correctly handling +, 00, and local 0.
-    Returns only digits.
+    """Normalize a phone number to a digit-only international string.
+
+    Handles the three most common input variants encountered in
+    European / German-locale data:
+
+    1. **International ``+`` prefix** — ``+49 151 1234567``
+    2. **International ``00`` prefix** — ``0049 151 1234567``
+    3. **Local ``0`` prefix** — ``0151 1234567`` (expanded using
+       *default_country*)
+    4. **Already normalized** — ``491511234567`` (returned as-is)
+
+    Non-digit, non-plus characters (spaces, hyphens, parentheses) are
+    stripped before prefix detection.
+
+    Args:
+        phone: Raw phone string in any common format.  Empty string or
+            strings containing no digits/plus return ``""``.
+        default_country: ITU-T country code (digits only, no ``+``)
+            prepended when a local ``0``-prefix number is detected.
+            Defaults to ``"49"`` (Germany).
+
+    Returns:
+        Digit-only string representing the international phone number,
+        or an empty string if the input is blank or contains no
+        recognizable digits.
+
+    Note:
+        No length or reachability validation is performed.  The caller
+        is responsible for validating that the result conforms to the
+        expected E.164 length for the target country.
 
     Example:
-    '0151 1234567' -> '491511234567'
-    '+49 151 1234567' -> '491511234567'
-    '0049 151 1234567' -> '491511234567'
+        ```python
+        normalize_phone("0151 1234567")          # → "491511234567"
+        normalize_phone("+49 151 1234567")        # → "491511234567"
+        normalize_phone("0049 151 1234567")       # → "491511234567"
+        normalize_phone("+1-800-555-0100", "1")   # → "18005550100"
+        normalize_phone("")                        # → ""
+        ```
     """
     if not phone:
         return ""
