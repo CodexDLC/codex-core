@@ -1279,15 +1279,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#010-2024-05-24" class="md-nav__link">
+  <a href="#011-2025-02-12" class="md-nav__link">
     <span class="md-ellipsis">
       
-        [0.1.0] - 2024-05-24
+        [0.1.1] - 2025-02-12
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="[0.1.0] - 2024-05-24">
+    <nav class="md-nav" aria-label="[0.1.1] - 2025-02-12">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1303,6 +1303,45 @@
         
           <li class="md-nav__item">
   <a href="#changed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#010-2024-05-24" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        [0.1.0] - 2024-05-24
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="[0.1.0] - 2024-05-24">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changed_1" class="md-nav__link">
     <span class="md-ellipsis">
       
         Changed
@@ -1363,15 +1402,15 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#010-2024-05-24" class="md-nav__link">
+  <a href="#011-2025-02-12" class="md-nav__link">
     <span class="md-ellipsis">
       
-        [0.1.0] - 2024-05-24
+        [0.1.1] - 2025-02-12
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="[0.1.0] - 2024-05-24">
+    <nav class="md-nav" aria-label="[0.1.1] - 2025-02-12">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1387,6 +1426,45 @@
         
           <li class="md-nav__item">
   <a href="#changed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Changed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#010-2024-05-24" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        [0.1.0] - 2024-05-24
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="[0.1.0] - 2024-05-24">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#added_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Added
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#changed_1" class="md-nav__link">
     <span class="md-ellipsis">
       
         Changed
@@ -1433,29 +1511,53 @@
 <p>All notable changes to this project will be documented in this file.</p>
 <p>The format is based on <a href="https://keepachangelog.com/en/1.1.0/">Keep a Changelog</a>,
 and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semantic Versioning</a>.</p>
-<h2 id="010-2024-05-24">[0.1.0] - 2024-05-24</h2>
+<h2 id="011-2025-02-12">[0.1.1] - 2025-02-12</h2>
 <h3 id="added">Added</h3>
 <ul>
-<li><strong>Project Structure</strong>: Initial setup of the core library as a standalone project.</li>
-<li><strong>Core Modules</strong>:</li>
-<li><code>codex_tools.common</code>: Cache, logging, text and phone utilities.</li>
-<li><code>codex_tools.core</code>: Base DTOs, interfaces, exceptions and PII utilities.</li>
-<li><code>codex_tools.schemas</code>: Standard response schemas.</li>
-<li><code>codex_tools.settings</code>: Base configuration management using <code>pydantic-settings</code>.</li>
-<li><strong>Infrastructure</strong>:</li>
-<li><code>pyproject.toml</code> with Hatchling build-system and Ruff/Mypy support.</li>
-<li>Pre-commit hooks for security and code quality.</li>
-<li>GitHub Actions workflows for CI, Docs and Publishing.</li>
-<li>MkDocs documentation skeleton.</li>
+<li><strong>Declarative PII Registry</strong>: Introduced <code>PIIRegistry</code> class in <code>pii.py</code> for explicit sensitive field name tracking, complementing the heuristic keyword-based matching.</li>
+<li><strong>Enhanced Documentation</strong>:</li>
+<li>Comprehensive Google-style docstrings added to all core modules: <code>log_context</code>, <code>loguru_setup</code>, <code>phone</code>, <code>text</code>, <code>base_dto</code>, <code>exceptions</code>, and <code>settings/base</code>.</li>
+<li>Added localized (EN/RU) documentation links and PyPI/License badges to <code>README.md</code>.</li>
+<li><strong>Dependency Management</strong>: Added <code>loguru</code> as an explicit optional dependency in <code>pyproject.toml</code>.</li>
 </ul>
 <h3 id="changed">Changed</h3>
 <ul>
-<li><strong>Python Support</strong>: Downgraded minimum Python requirement to <code>3.10+</code> for broader compatibility.</li>
-<li><strong>Repository Split</strong>: Formally split from the monolithic <code>codex_tools</code> repository into 4 focused projects (core, bot, cli, sdk).</li>
+<li><strong>PII Masking Logic</strong>: Refined <code>is_pii_field</code> and <code>mask_value</code> to prioritize explicit registry matches over heuristic keyword search.</li>
+<li><strong>Project Configuration</strong>: Updated <code>.gitignore</code> to include <code>.claude/</code> for modern AI tool support.</li>
+</ul>
+<h2 id="010-2024-05-24">[0.1.0] - 2024-05-24</h2>
+<h3 id="added_1">Added</h3>
+<ul>
+<li><strong>Project Structure</strong>: Initial setup of the core library as a standalone project.</li>
+<li><strong>Advanced PII Protection</strong>:</li>
+<li>Implementation of <code>BaseDTO</code> with automated, recursive PII masking in <code>repr</code> and <code>str</code>.</li>
+<li>Keyword-based sensitive data detection (phone, email, name, address, notes).</li>
+<li><strong>International Utilities</strong>:</li>
+<li><code>normalize_phone</code>: Robust normalization supporting <code>+</code>, <code>00</code>, and local German <code>0</code> formats.</li>
+<li><code>normalize_name</code>: Smart capitalization preserving hyphens and spaces.</li>
+<li><code>TaskLogContext</code>: Structured logging adapter for background tasks and operations.</li>
+<li><strong>Base Settings</strong>: <code>BaseCommonSettings</code> with standardized Redis URL generation and environment-aware flags.</li>
+<li><strong>Documentation</strong>:</li>
+<li>New Domain-Driven documentation standard (Architecture + API Reference).</li>
+<li>Bilingual support (EN/RU) with structural mirroring.</li>
+<li><strong>Testing</strong>:</li>
+<li>Comprehensive unit test suite (27 scenarios) covering Core, Common, and Settings.</li>
+<li>Integration test for environment variable loading.</li>
+</ul>
+<h3 id="changed_1">Changed</h3>
+<ul>
+<li><strong>Package Rename</strong>: Renamed package from <code>codex_tools</code> to <code>codex_core</code> for better clarity.</li>
+<li><strong>Dependency Optimization</strong>:</li>
+<li><code>loguru</code> removed from mandatory dependencies.</li>
+<li><code>loguru_setup</code> updated with safe imports and clear installation instructions.</li>
+<li><strong>CI/CD</strong>:</li>
+<li>Switched GitHub Actions to use Node.js 24 (via <code>FORCE_JAVASCRIPT_ACTIONS_TO_NODE24</code>).</li>
+<li>Updated Mypy paths to reflect the new package structure.</li>
 </ul>
 <h3 id="security">Security</h3>
 <ul>
 <li>Integrated <code>bandit</code>, <code>pip-audit</code>, and <code>detect-secrets</code> into the development lifecycle.</li>
+<li>Standardized <code>quote_plus</code> usage for all infrastructure connection strings.</li>
 </ul>
 
 
