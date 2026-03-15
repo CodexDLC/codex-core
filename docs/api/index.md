@@ -1,40 +1,15 @@
-# ⚙️ Technical API Reference
+[🏠 Home](../index.md) | [🧭 Guide (EN)](../en_EN/README.md) | [⚙️ API Reference](index.md)
 
-[⬅️ Back](../index.md) | [🏠 Docs Root](../index.md)
+# API Reference Overview
 
-This section contains auto-generated technical specifications extracted directly from the source code docstrings. If the code behavior contradicts this documentation, **the code is the bug**.
+Welcome to the **codex-core** API Reference! This section provides detailed information about all classes, functions, and modules in the library.
 
----
+## Core API (Essential)
 
-## 📦 Module Map
+- **[🛡️ Core (DTO & PII)](core.md)**: Base data models and PII protection utilities.
+- **[🛠️ Common (Utilities)](common.md)**: Phone, text, and logging helpers.
+- **[⚙️ Settings (Config)](settings.md)**: Base configuration patterns.
 
-Select a module to explore its classes, methods, and types:
+## Technical Details
 
-### 💼 Business Logic
-*   **[📅 Booking](./booking/index.md)**: ChainFinder, Scorer, and DTOs for complex scheduling.
-*   **[🔢 Calculator](./calculator/index.md)**: Slot calculation and time interval mathematics.
-*   **[🤖 LLM Orbit](./llm/index.md)**: Prompt orchestration, Dispatcher, and Router logic.
-*   **[📅 Calendar](../en_EN/architecture/calendar/index.md)**: Scheduling integration and time-slot management. *(Note: API docs pending)*
-
-### 📬 Communication & State
-*   **[🔌 Redis Service](./redis_service/index.md)**: Key registry, mixins, and optimized caching.
-*   **[📬 Notifications](./notifications/index.md)**: Payload builders and notification services.
-
-### 🛡️ Core & Infrastructure
-*   **[🛡️ Core](./core/index.md)**: Base DTOs, interfaces, and foundational protocols.
-*   **[🔌 Adapters](./adapters/index.md)**: Connectors for Django, Redis, and external services.
-*   **[⚙️ Settings](./settings/index.md)**: Pydantic-based configuration management.
-*   **[📡 Schemas](./schemas/index.md)**: Data validation and serialization schemas.
-*   **[🛠️ Common](./common/index.md)**: Shared utilities (Logger, Phone parsing, Cache, Text).
-
----
-
-## 🚀 How to Read
-
-1. **Parameters**: All public methods include type hints and descriptions.
-2. **Returns**: All return types are specified.
-3. **Examples**: Technical code snippets are provided for most public APIs.
-
----
-
-*Note: This section is generated using `mkdocstrings`.*
+All files in this section use the `::: codex_core` directive to automatically extract documentation from source code docstrings.

@@ -7,16 +7,31 @@ theme:
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
-      primary: indigo
-      accent: indigo
+      primary: deep purple
+      accent: purple
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
-      primary: indigo
-      accent: indigo
+      primary: deep purple
+      accent: purple
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.code.annotate
 
 plugins:
   - search
-  - mkdocs-include-markdown-plugin
+  - include-markdown
   - mkdocstrings:
       handlers:
         python:
@@ -24,21 +39,35 @@ plugins:
           options:
             show_source: true
             show_root_heading: true
+            show_root_full_path: false
+            show_category_heading: true
+            show_symbol_type_heading: true
+            show_symbol_type_toc: true
+            docstring_style: google
 
 nav:
   - Home: index.md
+  - Guide (EN):
+      - Overview: en_EN/README.md
+      - Getting Started: en_EN/guide/getting_started.md
+      - Architecture: en_EN/architecture/README.md
+      - Platform (Architecture):
+          - Core (PII & DTO): en_EN/architecture/platform/core.md
+          - Common (Utils): en_EN/architecture/platform/common.md
+          - Settings (Config): en_EN/architecture/platform/settings.md
+      - Evolution:
+          - Roadmap: evolution/roadmap.md
+  - Руководство (RU):
+      - Обзор: ru_RU/README.md
+      - Начало работы: ru_RU/guide/getting_started.md
+      - Обзор архитектуры: ru_RU/architecture/README.md
+      - Платформа (Архитектура):
+          - Core (PII и DTO): ru_RU/architecture/platform/core.md
+          - Common (Утилиты): ru_RU/architecture/platform/common.md
+          - Settings (Настройки): ru_RU/architecture/platform/settings.md
   - API Reference:
-      - Hub: api/index.md
-      - 🛡️ Core:
-          - Overview: api/core/index.md
-          - Interfaces: api/core/interfaces.md
-          - BaseDTO: api/core/base_dto.md
-      - 🛠️ Common:
-          - Overview: api/common/index.md
-          - Logger: api/common/logger.md
-          - Phone: api/common/phone.md
-          - Cache: api/common/cache.md
-          - Text: api/common/text.md
-      - ⚙️ Settings: api/settings/index.md
-      - 📡 Schemas: api/schemas/index.md
+      - Overview: api/index.md
+      - Core (DTO & PII): api/core.md
+      - Common (Utilities): api/common.md
+      - Settings (Base): api/settings.md
   - Changelog: changelog.md
