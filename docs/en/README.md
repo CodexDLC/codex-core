@@ -1,4 +1,4 @@
-[🏠 Home](../index.md) | [🧭 Guide (EN)](README.md) | [⚙️ API Reference](../api/index.md)
+[🏠 Home](../index.md) | [🧭 Guide (EN)](README.md) | [⚙️ API Reference](api/index.md)
 
 # Guide: Overview (EN)
 
@@ -6,7 +6,7 @@ Welcome to the **codex-core** guide! This library serves as the shared foundatio
 
 ## Documentation Sections
 
-### 1. [Getting Started](guide/getting_started.md)
+### 1. [Getting Started](tasks/getting_started.md)
 How to install and integrate `codex-core` into your project.
 
 ### 2. [🛡️ Architecture & Platform](architecture/README.md)
@@ -19,5 +19,5 @@ Detailed breakdown of the core platform components:
 ### 3. [🗺 Evolution](../evolution/roadmap.md)
 Our core purpose and development philosophy.
 
-### 4. [⚙️ API Reference](../api/index.md)
+### 4. [⚙️ API Reference](api/index.md)
 Technical details for developers.

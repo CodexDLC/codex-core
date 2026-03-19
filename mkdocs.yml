@@ -53,26 +53,31 @@ plugins:
 nav:
   - Home: index.md
   - Guide (EN):
-      - Overview: en_EN/README.md
-      - Getting Started: en_EN/guide/getting_started.md
-      - Architecture: en_EN/architecture/README.md
-      - Platform (Architecture):
-          - Core (PII & DTO): en_EN/architecture/platform/core.md
-          - Common (Utils): en_EN/architecture/platform/common.md
-          - Settings (Config): en_EN/architecture/platform/settings.md
+      - Overview: en/README.md
+      - Tasks:
+          - Getting Started: en/tasks/getting_started.md
+      - Architecture:
+          - Overview: en/architecture/README.md
+          - Core (PII & DTO): en/architecture/platform/core.md
+          - Common (Utils): en/architecture/platform/common.md
+          - Settings (Config): en/architecture/platform/settings.md
+          - Dev Tools: en/architecture/platform/dev.md
       - Evolution:
           - Roadmap: evolution/roadmap.md
   - Руководство (RU):
-      - Обзор: ru_RU/README.md
-      - Начало работы: ru_RU/guide/getting_started.md
-      - Обзор архитектуры: ru_RU/architecture/README.md
-      - Платформа (Архитектура):
-          - Core (PII и DTO): ru_RU/architecture/platform/core.md
-          - Common (Утилиты): ru_RU/architecture/platform/common.md
-          - Settings (Настройки): ru_RU/architecture/platform/settings.md
+      - Обзор: ru/README.md
+      - Задачи (Tasks):
+          - Начало работы: ru/tasks/getting_started.md
+      - Архитектура:
+          - Обзор: ru/architecture/README.md
+          - Core (PII и DTO): ru/architecture/platform/core.md
+          - Common (Утилиты): ru/architecture/platform/common.md
+          - Settings (Настройки): ru/architecture/platform/settings.md
+          - Dev Tools: ru/architecture/platform/dev.md
   - API Reference:
-      - Overview: api/index.md
-      - Core (DTO & PII): api/core.md
-      - Common (Utilities): api/common.md
-      - Settings (Base): api/settings.md
+      - Overview: en/api/index.md
+      - Core (DTO & PII): en/api/core.md
+      - Common (Utilities): en/api/common.md
+      - Settings (Base): en/api/settings.md
+      - Dev Tools: en/api/dev.md
   - Changelog: changelog.md

@@ -1,6 +1,6 @@
 # Codex Core Documentation
 
-[🛡️ Architecture (EN)](en_EN/architecture/README.md) | [⚙️ API Reference](api/index.md) | [🗺 Roadmap](evolution/roadmap.md)
+[🛡️ Architecture (EN)](en/architecture/README.md) | [⚙️ API Reference](en/api/index.md) | [🗺 Roadmap](evolution/roadmap.md)
 
 Welcome to the documentation for **codex-core**, a foundational library used across all Codex ecosystem projects. It provides:
 
@@ -10,6 +10,6 @@ Welcome to the documentation for **codex-core**, a foundational library used acr
 
 ## Quick Links
 
-- [Getting Started (EN)](en_EN/guide/getting_started.md)
-- [Начало работы (RU)](ru_RU/guide/getting_started.md)
-- [API Reference](api/index.md)
+- [Getting Started (EN)](en/tasks/getting_started.md)
+- [Начало работы (RU)](ru/tasks/getting_started.md)
+- [API Reference](en/api/index.md)

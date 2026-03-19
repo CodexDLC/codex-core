@@ -1,4 +1,4 @@
-[🏠 На главную](../../../index.md) | [🧭 Руководство (RU)](../../README.md) | [⚙️ API Reference](../../../api/settings.md)
+[🏠 На главную](../../../index.md) | [🧭 Руководство (RU)](../../README.md) | [⚙️ API Reference](../../../en/api/settings.md)
 
 # ⚙️ Settings: Архитектура настроек
 

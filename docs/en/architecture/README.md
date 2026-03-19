@@ -1,4 +1,4 @@
-[🏠 Home](../../index.md) | [🧭 Guide (EN)](../README.md) | [🛡️ Architecture](../../api/index.md)
+[🏠 Home](../../index.md) | [🧭 Guide (EN)](../README.md) | [🛡️ Architecture](../api/index.md)
 
 # 🛡️ Architecture & Platform Overview (EN)
 

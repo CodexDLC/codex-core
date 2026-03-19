@@ -1,4 +1,4 @@
-[🏠 Home](../index.md) | [🧭 Guide (EN)](../en_EN/README.md) | [🗺 Roadmap](roadmap.md)
+[🏠 Home](../index.md) | [🧭 Guide (EN)](../en/README.md) | [🗺 Roadmap](roadmap.md)
 
 # Evolution & Philosophy
 

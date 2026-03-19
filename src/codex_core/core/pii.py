@@ -36,6 +36,7 @@ logger = logging.getLogger(__name__)
 # Declarative Registry
 # ---------------------------------------------------------------------------
 
+
 class PIIRegistry:
     """Base class for declaring an explicit PII field registry.
 
@@ -45,26 +46,26 @@ class PIIRegistry:
     When any subclass of PIIRegistry is defined, the global masking logic
     switches from "substring matching" to "exact match" against these fields.
     """
+
     _registered_fields: ClassVar[frozenset[str]] = frozenset()
 
     def __init_subclass__(cls, **kwargs: Any) -> None:
         """Collect field names from annotations and class attributes."""
         super().__init_subclass__(**kwargs)
-        
+
         # Collect from annotations: email: str -> "email" (normalized to lowercase)
-        fields = {k.lower() for k in cls.__annotations__.keys()}
+        fields = {k.lower() for k in cls.__annotations__}
 
         # Collect from class attributes: phone = True -> "phone" (normalized to lowercase)
         fields.update(
-            name.lower() for name, value in cls.__dict__.items()
-            if not name.startswith("_") and not callable(value)
+            name.lower() for name, value in cls.__dict__.items() if not name.startswith("_") and not callable(value)
         )
-        
+
         # Merge into global singleton registry
         new_fields = set(PIIRegistry._registered_fields)
         new_fields.update(fields)
         PIIRegistry._registered_fields = frozenset(new_fields)
-        
+
         logger.debug(f"PII Registry updated. Fields: {list(PIIRegistry._registered_fields)}")
 
 
@@ -93,6 +94,7 @@ MASK: str = "***"
 # ---------------------------------------------------------------------------
 # Public API
 # ---------------------------------------------------------------------------
+
 
 def is_pii_field(field_name: str) -> bool:
     """Determine whether a field name should be masked.

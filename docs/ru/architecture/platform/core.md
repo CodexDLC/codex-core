@@ -1,4 +1,4 @@
-[🏠 На главную](../../../index.md) | [🧭 Руководство (RU)](../../README.md) | [🛡️ Core API](../../../api/core.md)
+[🏠 На главную](../../../index.md) | [🧭 Руководство (RU)](../../README.md) | [🛡️ Core API](../../../en/api/core.md)
 
 # 🛡️ Core: PII и DTO (Архитектура)
 

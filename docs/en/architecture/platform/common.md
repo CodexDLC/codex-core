@@ -1,4 +1,4 @@
-[🏠 Home](../../../index.md) | [🧭 Guide (EN)](../../README.md) | [🛠️ Common API](../../../api/common.md)
+[🏠 Home](../../../index.md) | [🧭 Guide (EN)](../../README.md) | [🛠️ Common API](../../api/common.md)
 
 # 🛠️ Common: Utilities (Architecture)
 

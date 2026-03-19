@@ -1,4 +1,4 @@
-[🏠 Home](../../../index.md) | [🧭 Guide (EN)](../../README.md) | [🛡️ Core API](../../../api/core.md)
+[🏠 Home](../../../index.md) | [🧭 Guide (EN)](../../README.md) | [🛡️ Core API](../../api/core.md)
 
 # 🛡️ Core: PII & DTO (Architecture)
 

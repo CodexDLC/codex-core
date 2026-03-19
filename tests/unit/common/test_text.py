@@ -25,11 +25,14 @@ def test_normalize_name(name, expected):
 def test_clean_string():
     assert clean_string("  hello \n world  ") == "hello world"
     assert clean_string("") == ""
+    assert clean_string(None) == ""
 
 
 def test_transliterate():
     assert transliterate("Привет") == "Privet"
     assert transliterate("Яблоко") == "Yabloko"
+    assert transliterate("") == ""
+    assert transliterate(None) == ""
 
 
 @pytest.mark.parametrize(
@@ -40,6 +43,8 @@ def test_transliterate():
             "Very long message that should be truncated by default length",
             "Very long message that should be truncated by defa",
         ),
+        ("", ""),
+        (None, ""),
     ],
 )
 def test_sanitize_for_sms(text, expected):

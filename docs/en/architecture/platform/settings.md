@@ -1,4 +1,4 @@
-[🏠 Home](../../../index.md) | [🧭 Guide (EN)](../../README.md) | [⚙️ Settings API](../../../api/settings.md)
+[🏠 Home](../../../index.md) | [🧭 Guide (EN)](../../README.md) | [⚙️ Settings API](../../api/settings.md)
 
 # ⚙️ Settings: Config Architecture
 

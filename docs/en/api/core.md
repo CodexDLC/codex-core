@@ -1,4 +1,4 @@
-[🏠 Home](../index.md) | [⚙️ API Reference](index.md) | [🛡️ Core API](core.md)
+[🏠 Home](../../index.md) | [⚙️ API Reference](index.md) | [🛡️ Core API](core.md)
 
 # 🛡️ Core API (DTO & PII)
 

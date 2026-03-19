@@ -31,7 +31,7 @@ from typing import TYPE_CHECKING, Protocol, runtime_checkable
 try:
     from loguru import logger
 except ImportError:
-    logger = None  # type: ignore
+    logger = None
 
 
 if TYPE_CHECKING:
@@ -148,10 +148,7 @@ def setup_universal_logging(
         ```
     """
     if logger is None:
-        raise ImportError(
-            "loguru is not installed. Please install it manually: "
-            "pip install loguru"
-        )
+        raise ImportError("loguru is not installed. Please install it manually: pip install loguru")
 
     logger.remove()
     log_dir.mkdir(parents=True, exist_ok=True)
@@ -285,10 +282,7 @@ def setup_logging(
         ```
     """
     if logger is None:
-        raise ImportError(
-            "loguru is not installed. Please install it manually: "
-            "pip install loguru"
-        )
+        raise ImportError("loguru is not installed. Please install it manually: pip install loguru")
 
     logger.remove()
 

@@ -1,4 +1,4 @@
-[🏠 Home](../index.md) | [⚙️ API Reference](index.md) | [⚙️ Settings API](settings.md)
+[🏠 Home](../../index.md) | [⚙️ API Reference](index.md) | [⚙️ Settings API](settings.md)
 
 # ⚙️ Settings API (Base Configuration)
 

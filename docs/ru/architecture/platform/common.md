@@ -1,4 +1,4 @@
-[🏠 На главную](../../../index.md) | [🧭 Руководство (RU)](../../README.md) | [🛠️ Common API](../../../api/common.md)
+[🏠 На главную](../../../index.md) | [🧭 Руководство (RU)](../../README.md) | [🛠️ Common API](../../../en/api/common.md)
 
 # 🛠️ Common: Утилиты (Архитектура)
 

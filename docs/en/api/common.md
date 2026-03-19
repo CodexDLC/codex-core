@@ -1,4 +1,4 @@
-[🏠 Home](../index.md) | [⚙️ API Reference](index.md) | [🛠️ Common API](common.md)
+[🏠 Home](../../index.md) | [⚙️ API Reference](index.md) | [🛠️ Common API](common.md)
 
 # 🛠️ Common API (Utilities)
 

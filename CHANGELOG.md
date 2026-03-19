@@ -5,6 +5,37 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.0] - 2025-02-13
+
+### Added
+- **Python 3.13 Support**: Added official support for Python 3.13 in `pyproject.toml` classifiers.
+- **Comprehensive Unit Tests**:
+  - New tests for `core/exceptions.py` covering base exception functionality.
+  - New tests for `common/log_context.py` covering `TaskLogContext` logging methods.
+  - New tests for `common/loguru_setup.py` covering `InterceptHandler`, `setup_universal_logging`, and `setup_logging` with and without `loguru` installed.
+
+### Changed
+- **Documentation Structure**:
+  - Renamed top-level language directories from `en_EN/` to `en/` and `ru_RU/` to `ru/`.
+  - Moved `api/` documentation into `en/api/` for better language-specific grouping.
+  - Renamed `guide/` directories to `tasks/` in both `en/` and `ru/` to align with `DocArchitect:StructurePolicy` for user-oriented guides.
+  - Updated `mkdocs.yml` navigation and all internal Markdown links to reflect the new documentation structure.
+  - Updated root `README.md` to strictly follow `DocArchitect:StructurePolicy` (Layer 5 - Root Landing), including a detailed `Modules` table (with `dev` module) and a comprehensive `Part of the Codex ecosystem` section.
+- **Test Coverage Configuration**:
+  - Configured `pytest-cov` in `pyproject.toml` to include `addopts`, `[tool.coverage.run]`, and `[tool.coverage.report]` sections.
+  - Excluded `src/codex_core/dev/*` from coverage reports as these are internal development tools.
+  - Added `exclude_lines` for `TYPE_CHECKING` and `ImportError` to achieve accurate coverage metrics.
+- **Test Isolation**: Implemented `autouse` fixture `reset_pii_registry` in `tests/conftest.py` to ensure `PIIRegistry` global state is reset between tests, guaranteeing test isolation.
+- **Test Markers**: Created `tests/unit/conftest.py` and `tests/integration/conftest.py` to automatically apply `pytest.mark.unit` and `pytest.mark.integration` markers to tests within their respective directories.
+
+### Fixed
+- **Mypy Errors**: Resolved missing type parameters for generic types in `src/codex_core/dev/static_compiler/compiler.py` and `src/codex_core/dev/static_compiler/css.py`.
+- **Ruff Errors**: Resolved `SIM118` (Use `key in dict` instead of `key in dict.keys()`) in `src/codex_core/core/pii.py`.
+- **Ruff Errors**: Resolved `SIM117` (Use a single `with` statement with multiple contexts) in `tests/unit/common/test_loguru_setup.py`.
+- **Test Coverage Gaps**:
+  - Covered `PIIRegistry` initialization logic and recursive list masking in `tests/unit/core/test_pii.py`.
+  - Covered falsy input handling in `transliterate` and `sanitize_for_sms` functions in `tests/unit/common/test_text.py`.
+
 ## [0.1.1] - 2025-02-12
 
 ### Added

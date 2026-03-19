@@ -1,38 +1,63 @@
+<!-- Type: LANDING -->
 # codex-core
-
-**Core utilities, schemas, and settings for the Codex WaaS toolkit.**
 
 [![PyPI](https://img.shields.io/pypi/v/codex-core)](https://pypi.org/project/codex-core/)
 [![Python](https://img.shields.io/pypi/pyversions/codex-core)](https://pypi.org/project/codex-core/)
 [![License](https://img.shields.io/badge/license-Apache--2.0-green)](https://github.com/codexdlc/codex-core/blob/main/LICENSE)
 [![Documentation](https://img.shields.io/badge/docs-codexdlc.github.io-blue)](https://codexdlc.github.io/codex-core/)
 
-This library provides the foundational building blocks used by all other Codex tools. It focuses on Pydantic-based data models, structured logging, and configuration management.
-
-> **Documentation:**
-> [EN](https://codexdlc.github.io/codex-core/en_EN/) · [RU](https://codexdlc.github.io/codex-core/ru_RU/) · [API Reference](https://codexdlc.github.io/codex-core/api/) · [Changelog](https://codexdlc.github.io/codex-core/changelog/)
-
-## 🚀 Key Features
-
-*   **Core Interfaces**: Base classes and protocols for Codex components.
-*   **Common Utilities**: Logger setup (Loguru), phone number validation, text processing, and caching.
-*   **Schemas**: Shared Pydantic models for cross-service communication.
-*   **Settings**: Modern configuration management using `pydantic-settings`.
-
-## 📦 Installation
-
-```bash
-pip install codex-core
-```
-
-## 🛠️ Quick Start
-
-```python
-from codex_tools.common.logger import setup_logger
-
-logger = setup_logger("my-app")
-logger.info("Codex Core is ready!")
-```
+Core utilities, immutable DTOs, and environment-driven settings for the Codex WaaS toolkit.
+Provides the foundational building blocks and PII masking used by all other Codex components.
 
 ---
-*Part of the [Codex WaaS](https://github.com/codexdlc) ecosystem. · [EN Docs](https://codexdlc.github.io/codex-core/en_EN/) · [RU Docs](https://codexdlc.github.io/codex-core/ru_RU/) · [API](https://codexdlc.github.io/codex-core/api/) · [Changelog](https://codexdlc.github.io/codex-core/changelog/) · [Source](https://github.com/codexdlc/codex-core)*
+
+## Install
+
+```bash
+# Core only
+pip install codex-core
+
+# With Loguru support for advanced structured logging
+pip install "codex-core[loguru]"
+```
+
+## Quick Start
+
+```python
+from codex_core.core.base_dto import BaseDTO
+
+# 1. Define an immutable, PII-aware data transfer object
+class UserDTO(BaseDTO):
+    id: int
+    email: str         # Automatically masked in logs
+    phone_number: str  # Automatically masked in logs
+
+user = UserDTO(id=42, email="user@example.com", phone_number="+491511234567")
+
+# 2. Safely log the DTO without leaking personal data
+print(user)
+# Output: UserDTO(id=42, email='***', phone_number='***')
+```
+
+## Modules
+
+| Module | Extra | Description |
+| :--- | :--- | :--- |
+| `codex_core.core` | - | Immutable `BaseDTO` and automated `PIIRegistry` for GDPR-safe logging. |
+| `codex_core.common` | `[loguru]` | Phone/name normalization and structured logging adapters (`TaskLogContext`). |
+| `codex_core.settings` | - | Environment-driven configuration via `BaseCommonSettings` (Pydantic Settings). |
+| `codex_core.dev` | `[dev]` | Internal developer tools (`BaseCheckRunner`, `StaticCompiler`, `ProjectTreeGenerator`). |
+
+## Documentation
+
+Full docs with architecture, API reference, and data flow diagrams:
+
+**[https://codexdlc.github.io/codex-core/](https://codexdlc.github.io/codex-core/)**
+
+## Part of the Codex ecosystem
+
+- **[codex-core](https://github.com/codexdlc/codex-core)**: Foundational utilities and DTOs.
+- **[codex-platform](https://github.com/codexdlc/codex-platform)**: Core platform components and HTTP APIs.
+- **[codex-bot](https://github.com/codexdlc/codex-bot)**: Telegram AI-agent infrastructure.
+- **[codex-services](https://github.com/codexdlc/codex-services)**: Business logic engines (Booking, CRM).
+- **[codex-ai](https://github.com/codexdlc/codex-ai)**: LLM abstraction layer.

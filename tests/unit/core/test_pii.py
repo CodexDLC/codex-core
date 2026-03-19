@@ -1,7 +1,7 @@
 import pytest
 
 from codex_core.core.base_dto import BaseDTO
-from codex_core.core.pii import is_pii_field, mask_value
+from codex_core.core.pii import PIIRegistry, is_pii_field, mask_value
 
 pytestmark = pytest.mark.unit
 
@@ -28,6 +28,37 @@ def test_mask_value_recursive():
     raw_list = [{"phone": "123"}, {"public": "yes"}]
     masked_list = mask_value("items", raw_list)
     assert masked_list == [{"phone": "***"}, {"public": "yes"}]
+
+    # Scalar list
+    raw_scalar_list = ["a", "b"]
+    assert mask_value("tags", raw_scalar_list) == ["a", "b"]
+    assert mask_value("email", raw_scalar_list) == "***"
+
+
+def test_pii_registry():
+    """Test that defining a PIIRegistry subclass switches masking to exact match."""
+
+    class CustomPII(PIIRegistry):
+        explicit_email: str
+        explicit_phone = True
+        _ignored_field = True
+
+        def ignored_method(self):
+            pass
+
+    # Ensure fields are registered
+    assert "explicit_email" in PIIRegistry._registered_fields
+    assert "explicit_phone" in PIIRegistry._registered_fields
+    assert "_ignored_field" not in PIIRegistry._registered_fields
+    assert "ignored_method" not in PIIRegistry._registered_fields
+
+    # Since registry is now active, fallback keywords should be ignored!
+    assert is_pii_field("email") is False
+    assert is_pii_field("phone") is False
+
+    # But explicit fields are masked
+    assert is_pii_field("explicit_email") is True
+    assert is_pii_field("explicit_phone") is True
 
 
 class UserDTO(BaseDTO):

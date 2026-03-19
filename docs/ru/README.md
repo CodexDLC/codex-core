@@ -1,4 +1,4 @@
-[🏠 На главную](../index.md) | [🧭 Руководство (RU)](README.md) | [⚙️ API Reference](../api/index.md)
+[🏠 На главную](../index.md) | [🧭 Руководство (RU)](README.md) | [⚙️ API Reference](../en/api/index.md)
 
 # Руководство: Обзор (RU)
 
@@ -6,7 +6,7 @@
 
 ## Разделы документации
 
-### 1. [Начало работы](guide/getting_started.md)
+### 1. [Начало работы](tasks/getting_started.md)
 Как установить и интегрировать `codex-core` в ваш проект.
 
 ### 2. [🛡️ Архитектура и Платформа](architecture/README.md)
@@ -19,5 +19,5 @@
 ### 3. [🗺 Роадмап](../evolution/roadmap.md)
 Наше видение и философия развития проекта.
 
-### 4. [⚙️ API Reference](../api/index.md)
+### 4. [⚙️ API Reference](../en/api/index.md)
 Технические детали для разработчиков.

@@ -87,8 +87,7 @@ class BaseDTO(BaseModel):
         """
         cls_name = type(self).__name__
         pairs: list[str] = [
-            f"{field_name}={mask_value(field_name, value)!r}"
-            for field_name, value in self.__dict__.items()
+            f"{field_name}={mask_value(field_name, value)!r}" for field_name, value in self.__dict__.items()
         ]
         return f"{cls_name}({', '.join(pairs)})"
 
