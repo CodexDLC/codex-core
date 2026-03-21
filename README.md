@@ -56,8 +56,14 @@ Full docs with architecture, API reference, and data flow diagrams:
 
 ## Part of the Codex ecosystem
 
-- **[codex-core](https://github.com/codexdlc/codex-core)**: Foundational utilities and DTOs.
-- **[codex-platform](https://github.com/codexdlc/codex-platform)**: Core platform components and HTTP APIs.
-- **[codex-bot](https://github.com/codexdlc/codex-bot)**: Telegram AI-agent infrastructure.
-- **[codex-services](https://github.com/codexdlc/codex-services)**: Business logic engines (Booking, CRM).
-- **[codex-ai](https://github.com/codexdlc/codex-ai)**: LLM abstraction layer.
+| Package | Role |
+| :--- | :--- |
+| **codex-core** | Foundation — immutable DTOs, PII masking, env settings |
+| [codex-platform](https://github.com/codexdlc/codex-platform) | Infrastructure — Redis, Streams, ARQ workers, Notifications |
+| [codex-ai](https://github.com/codexdlc/codex-ai) | LLM layer — unified async interface for OpenAI, Gemini, Anthropic |
+| [codex-services](https://github.com/codexdlc/codex-services) | Business logic — Booking engine, CRM, Calendar |
+
+Each library is **fully standalone** — install only what your project needs.
+Together they form the backbone of **[codex-bot](https://github.com/codexdlc/codex-bot)**
+(Telegram AI-agent infrastructure built on aiogram) and
+**[codex-django](https://github.com/codexdlc/codex-django)** (Django integration layer).

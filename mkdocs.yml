@@ -7,23 +7,25 @@ theme:
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
-      primary: deep purple
-      accent: purple
+      primary: teal
+      accent: cyan
       toggle:
         icon: material/brightness-7
         name: Switch to dark mode
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
-      primary: deep purple
-      accent: purple
+      primary: teal
+      accent: cyan
       toggle:
         icon: material/brightness-4
         name: Switch to light mode
   features:
     - navigation.tabs
+    - navigation.tabs.sticky
     - navigation.sections
     - navigation.expand
     - navigation.top
+    - navigation.breadcrumbs
     - search.suggest
     - search.highlight
     - content.code.copy
@@ -33,6 +35,9 @@ extra:
   version:
     provider: mike
     default: latest
+
+extra_css:
+  - stylesheets/extra.css
 
 plugins:
   - search
@@ -49,6 +54,7 @@ plugins:
             show_symbol_type_heading: true
             show_symbol_type_toc: true
             docstring_style: google
+            members_order: source
 
 nav:
   - Home: index.md
@@ -62,8 +68,6 @@ nav:
           - Common (Utils): en/architecture/platform/common.md
           - Settings (Config): en/architecture/platform/settings.md
           - Dev Tools: en/architecture/platform/dev.md
-      - Evolution:
-          - Roadmap: evolution/roadmap.md
   - Руководство (RU):
       - Обзор: ru/README.md
       - Задачи (Tasks):
@@ -81,3 +85,4 @@ nav:
       - Settings (Base): en/api/settings.md
       - Dev Tools: en/api/dev.md
   - Changelog: changelog.md
+  - Roadmap: evolution/roadmap.md
