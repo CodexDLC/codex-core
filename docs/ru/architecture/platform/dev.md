@@ -1,4 +1,5 @@
-[🏠 Главная](../../../index.md) | [🧭 Руководство (RU)](../../README.md) | [🛠️ Dev API](../../../en/api/dev.md)
+<!-- Type: CONCEPT -->
+[🏠 Главная](../../../index.md) | [🧭 Руководство (RU)](../../README.md) | [🛠️ Dev API](../../../en/api/dev/index.md)
 
 # Dev Tools (Архитектура)
 
@@ -36,6 +37,24 @@ python tools/dev/check.py --tests integration
 python tools/dev/check.py --all         # lint + types + security + unit, спрашивает про integration
 python tools/dev/check.py --ci          # всё без промптов (GitHub Actions)
 ```
+
+### Проектные переключатели
+
+Проект может оставить общую оркестрацию и задать свою локальную политику через
+булевы атрибуты в `CheckRunner`:
+
+```python
+class CheckRunner(BaseCheckRunner):
+    RUN_LINT = True
+    RUN_TYPES = True
+    RUN_SECURITY = True
+    RUN_EXTRA_CHECKS = True
+    RUN_UNIT_TESTS = True
+    RUN_INTEGRATION_TESTS = False
+```
+
+Это основной способ настройки, когда библиотеке не нужны все этапы проверки.
+Переопределяйте методы только тогда, когда нужно менять само поведение.
 
 ### Использование в проекте
 

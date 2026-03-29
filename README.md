@@ -21,6 +21,20 @@ pip install codex-core
 pip install "codex-core[loguru]"
 ```
 
+Requires Python 3.12 or newer.
+
+## Development
+
+```bash
+uv sync --extra dev
+uv run pytest
+uv run mypy src/codex_core/
+uv run pre-commit run --all-files
+uv build --no-sources
+```
+
+Requires Python 3.12 or newer.
+
 ## Quick Start
 
 ```python

@@ -28,14 +28,18 @@ import sys
 from pathlib import Path
 from typing import TYPE_CHECKING, Protocol, runtime_checkable
 
-try:
-    from loguru import logger
-except ImportError:
-    logger = None
-
-
 if TYPE_CHECKING:
     from types import FrameType
+
+    from loguru import Logger
+
+logger: "Logger | None"
+try:
+    from loguru import logger as _loguru_logger
+except ImportError:
+    logger = None
+else:
+    logger = _loguru_logger
 
 
 class InterceptHandler(logging.Handler):

@@ -1,4 +1,5 @@
-[🏠 На главную](../../index.md) | [🧭 Руководство (RU)](../README.md) | [🛡️ Архитектура](../../en/api/index.md)
+<!-- Type: CONCEPT -->
+[🏠 На главную](../../index.md) | [🧭 Руководство (RU)](../README.md) | [🛡️ Архитектура](README.md)
 
 # 🛡️ Обзор архитектуры и платформы (RU)
 
@@ -12,6 +13,7 @@
 | **[🛡️ Core](platform/core.md)** | Основные модели данных и безопасность. | `BaseDTO`, Маскировка PII, `mask_value`. |
 | **[🛠️ Common](platform/common.md)** | Стандартизированные функции-утилиты. | `normalize_phone`, `normalize_name`, `TaskLogContext`. |
 | **[⚙️ Settings](platform/settings.md)** | Конфигурация инфраструктуры. | `BaseCommonSettings`, `redis_url`. |
+| **[🛠️ Dev Tools](platform/dev.md)** | Общие инструменты разработки. | `BaseCheckRunner`, `ProjectTreeGenerator`, `StaticCompiler`. |
 
 ## Основные принципы
 1. **Безопасность прежде всего**: Защита PII интегрирована на уровне базового DTO.
@@ -23,3 +25,4 @@
 - Узнайте о [🛡️ Core: PII и DTO](platform/core.md).
 - Изучите [🛠️ Общие утилиты (Common)](platform/common.md).
 - Разберитесь в [⚙️ Архитектуре настроек (Settings)](platform/settings.md).
+- Посмотрите [🛠️ Dev Tools](platform/dev.md).

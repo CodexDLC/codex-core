@@ -1,4 +1,5 @@
-[🏠 Home](../../index.md) | [🧭 Guide (EN)](../README.md) | [🛡️ Architecture](../api/index.md)
+<!-- Type: CONCEPT -->
+[🏠 Home](../../index.md) | [🧭 Guide (EN)](../README.md) | [🛡️ Architecture](README.md)
 
 # 🛡️ Architecture & Platform Overview (EN)
 
@@ -12,6 +13,7 @@ We divide the platform into three main domains, each serving a specific purpose:
 | **[🛡️ Core](platform/core.md)** | Essential data models and security. | `BaseDTO`, PII Masking, `mask_value`. |
 | **[🛠️ Common](platform/common.md)** | Standardized utility functions. | `normalize_phone`, `normalize_name`, `TaskLogContext`. |
 | **[⚙️ Settings](platform/settings.md)** | Infrastructure configuration. | `BaseCommonSettings`, `redis_url`. |
+| **[🛠️ Dev Tools](platform/dev.md)** | Shared developer tooling. | `BaseCheckRunner`, `ProjectTreeGenerator`, `StaticCompiler`. |
 
 ## Core Principles
 1. **Security First**: PII protection is integrated at the base DTO level.
@@ -23,3 +25,4 @@ We divide the platform into three main domains, each serving a specific purpose:
 - Read about [🛡️ Core: PII & DTO](platform/core.md).
 - Explore [🛠️ Common Utilities](platform/common.md).
 - Understand [⚙️ Settings Architecture](platform/settings.md).
+- Review [🛠️ Dev Tools](platform/dev.md).

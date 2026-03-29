@@ -9,7 +9,7 @@ Welcome to the **codex-core** API Reference! This section provides detailed info
 - **[🛡️ Core (DTO & PII)](core.md)**: Base data models and PII protection utilities.
 - **[🛠️ Common (Utilities)](common.md)**: Phone, text, and logging helpers.
 - **[⚙️ Settings (Config)](settings.md)**: Base configuration patterns.
-- **[🛠️ Dev Tools](dev.md)**: Internal developer tools.
+- **[🛠️ Dev Tools](dev/index.md)**: Internal developer tools split by subsystem.
 
 ## Technical Details
 

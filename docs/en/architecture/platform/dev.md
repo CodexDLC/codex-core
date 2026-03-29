@@ -1,4 +1,5 @@
-[🏠 Home](../../../index.md) | [🧭 Guide (EN)](../../README.md) | [🛠️ Dev API](../../api/dev.md)
+<!-- Type: CONCEPT -->
+[🏠 Home](../../../index.md) | [🧭 Guide (EN)](../../README.md) | [🛠️ Dev API](../../api/dev/index.md)
 
 # Dev Tools (Architecture)
 
@@ -36,6 +37,24 @@ python tools/dev/check.py --tests integration
 python tools/dev/check.py --all         # lint + types + security + unit, asks about integration
 python tools/dev/check.py --ci          # everything non-interactively (GitHub Actions)
 ```
+
+### Project switches
+
+Projects can keep the shared orchestration and declare their local policy with
+simple boolean attributes on `CheckRunner`:
+
+```python
+class CheckRunner(BaseCheckRunner):
+    RUN_LINT = True
+    RUN_TYPES = True
+    RUN_SECURITY = True
+    RUN_EXTRA_CHECKS = True
+    RUN_UNIT_TESTS = True
+    RUN_INTEGRATION_TESTS = False
+```
+
+This is the preferred extension point when a library does not need every stage.
+Use method overrides only when behavior itself must change.
 
 ### Usage in a project
 

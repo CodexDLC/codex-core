@@ -1,3 +1,4 @@
+<!-- Type: GUIDE -->
 [🏠 Home](../../index.md) | [🧭 Guide (EN)](../README.md) | [🚀 Getting Started](getting_started.md)
 
 # Getting Started (EN)
@@ -20,10 +21,10 @@ pip install git+https://github.com/codexdlc/codex-core.git
 ```
 
 ### Optional Dependencies
-If you want to use the pre-configured Loguru setup, you'll need to install `loguru` manually:
+If you want to use the pre-configured Loguru setup, install the optional extra:
 
 ```bash
-pip install loguru
+pip install "codex-core[loguru]"
 ```
 
 ## First Steps

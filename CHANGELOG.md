@@ -5,6 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.1] - 2026-03-29
+
+### Added
+- **Locked UV Workflow**: Added `.python-version` and committed `uv.lock` so local development, CI, docs, and publish flows use a consistent locked dependency set.
+- **Configurable Check Runner Stages**: Added `RUN_LINT`, `RUN_TYPES`, `RUN_SECURITY`, `RUN_EXTRA_CHECKS`, `RUN_UNIT_TESTS`, and `RUN_INTEGRATION_TESTS` flags to `BaseCheckRunner` so each codex-* project can declare its quality-gate policy without replacing orchestration logic.
+- **Expanded Dev API Docs**: Split the Dev Tools API reference into separate pages for the check runner, project tree generator, and static compiler.
+
+### Changed
+- **Python Support Policy**: Raised the declared minimum Python version to 3.12 and aligned Ruff, Mypy, packaging metadata, and CI matrices with the supported runtime versions.
+- **UV-Based Automation**: Updated CI, docs deployment, and publish workflows to use `uv sync`, `uv run`, and `uv build` instead of ad-hoc pip installs.
+- **Documentation Structure**:
+  - Synchronized `tools/dev/README.md` and architecture guides with the real `BaseCheckRunner` CLI and extension model.
+  - Reorganized the Dev Tools API navigation into a nested expandable section under `API Reference`.
+  - Moved the Python-version planning note into `docs/planning/` as an internal draft instead of a public docs root page.
+
+### Fixed
+- **Optional Loguru Typing**: Fixed `mypy` failure in `src/codex_core/common/loguru_setup.py` by making the optional `loguru` import type-safe.
+- **Checker UX Consistency**: Added explicit skip messages when disabled check stages are not executed, improving both local and CI output clarity.
+
 ## [0.2.0] - 2025-02-13
 
 ### Added

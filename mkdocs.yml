@@ -83,6 +83,10 @@ nav:
       - Core (DTO & PII): en/api/core.md
       - Common (Utilities): en/api/common.md
       - Settings (Base): en/api/settings.md
-      - Dev Tools: en/api/dev.md
+      - Dev Tools:
+          - Overview: en/api/dev/index.md
+          - Check Runner: en/api/dev/check_runner.md
+          - Project Tree: en/api/dev/project_tree.md
+          - Static Compiler: en/api/dev/static_compiler.md
   - Changelog: changelog.md
   - Roadmap: evolution/roadmap.md

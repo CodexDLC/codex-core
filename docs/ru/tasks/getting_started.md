@@ -1,3 +1,4 @@
+<!-- Type: GUIDE -->
 [🏠 На главную](../../index.md) | [🧭 Руководство (RU)](../README.md) | [🚀 Начало работы](getting_started.md)
 
 # Начало работы (RU)
@@ -20,10 +21,10 @@ pip install git+https://github.com/codexdlc/codex-core.git
 ```
 
 ### Опциональные зависимости
-Если вы хотите использовать преднастроенный логгер `Loguru`, вам нужно будет установить `loguru` вручную:
+Если вы хотите использовать преднастроенный логгер `Loguru`, установите optional extra:
 
 ```bash
-pip install loguru
+pip install "codex-core[loguru]"
 ```
 
 ## Первые шаги
