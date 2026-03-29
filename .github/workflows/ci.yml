@@ -27,13 +27,13 @@ jobs:
         run: uv sync --locked --extra dev
 
       - name: Run pre-commit
-        run: uv run pre-commit run --all-files
+        run: uv run python tools/dev/check.py --lint
 
       - name: Run pip-audit
-        run: uv run pip-audit
+        run: uv run python tools/dev/check.py --security
 
       - name: Run mypy
-        run: uv run mypy src/codex_core/
+        run: uv run python tools/dev/check.py --types
 
   unit-tests:
     name: Unit Tests (Python ${{ matrix.python-version }})
