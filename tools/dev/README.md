@@ -25,17 +25,10 @@ from `codex_core.dev` and runs the checks enabled by the local project config.
 - Optional project-specific `extra_checks()` hook
 
 ### Project-level flags
-`tools/dev/check.py` can enable or disable standard steps through boolean class attributes:
 
-- `RUN_LINT`
-- `RUN_TYPES`
-- `RUN_SECURITY`
-- `RUN_EXTRA_CHECKS`
-- `RUN_UNIT_TESTS`
-- `RUN_INTEGRATION_TESTS`
+The preferred way to declare project-level quality gate policy is via `pyproject.toml` using the `[tool.codex-check]` section. Legacy support for class attributes in `CheckRunner` is also available for backwards compatibility.
 
-This lets each codex-* project treat the shared runner as a base and declare
-its own quality gate policy without forking the orchestration logic.
+This lets each codex-* project treat the shared runner as a base and declare its own quality gate policy without forking the orchestration logic.
 
 ## `generate_project_tree.py`
 Generates a visual representation of the project structure for documentation purposes.
