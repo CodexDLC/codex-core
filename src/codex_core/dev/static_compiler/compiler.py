@@ -8,7 +8,14 @@ Two modes:
    compiler_config.json format:
    {
        "css": {"base.css": "app.css"},
-       "js":  {"app.js": ["module1.js", "module2.js"]}
+       "js":  {
+           "app.js": ["module1.js", "module2.js"],
+           "cabinet.js": {
+               "strategy": "dependency_graph",
+               "entry": ["app/entry.js"],
+               "roots": ["core", "widgets", "builders", "app"]
+           }
+       }
    }
    Old format (CSS-only, backwards-compatible):
    {
@@ -89,7 +96,7 @@ class StaticCompiler:
 
         # Detect old {"base.css": "app.css"} format — treat as css-only
         css_config: dict[str, str] = data.get("css", {})
-        js_config: dict[str, list[str]] = data.get("js", {})
+        js_config: dict[str, list[str] | dict[str, Any]] = data.get("js", {})
         if not css_config and not js_config:
             css_config = data
 
@@ -113,10 +120,10 @@ class StaticCompiler:
 
         if js_config and self._js:
             print("--- JS ---")
-            for dst, sources in js_config.items():
+            for dst, bundle in js_config.items():
                 dst_path = js_dir / dst
-                if not self._js.compile(
-                    sources,
+                if not self._js.compile_bundle(
+                    bundle,
                     dst_path,
                     js_dir,
                     minify=self._minify,

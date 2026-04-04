@@ -40,21 +40,28 @@ python tools/dev/check.py --ci          # всё без промптов (GitHub
 
 ### Проектные переключатели
 
-Проект может оставить общую оркестрацию и задать свою локальную политику через
-булевы атрибуты в `CheckRunner`:
+Рекомендуемый способ задания проектной политики проверки качества — через секцию `[tool.codex-check]` в файле `pyproject.toml`:
+
+```toml
+[tool.codex-check]
+project-name = "my-project"
+audit-flags = "--skip-editable"
+run-lint = true
+run-types = true
+run-security = true
+run-unit-tests = true
+run-integration-tests = false
+test-stages = ["unit", "integration"]
+prompt-test-stages = ["integration"]
+```
+
+Поддержка атрибутов класса в `CheckRunner` сохранена для обратной совместимости:
 
 ```python
 class CheckRunner(BaseCheckRunner):
-    RUN_LINT = True
-    RUN_TYPES = True
-    RUN_SECURITY = True
-    RUN_EXTRA_CHECKS = True
     RUN_UNIT_TESTS = True
     RUN_INTEGRATION_TESTS = False
 ```
-
-Это основной способ настройки, когда библиотеке не нужны все этапы проверки.
-Переопределяйте методы только тогда, когда нужно менять само поведение.
 
 ### Использование в проекте
 
@@ -170,6 +177,29 @@ gen = ProjectTreeGenerator(
     }
 }
 ```
+
+Для JS также поддерживается dependency-aware режим:
+
+```json
+{
+    "js": {
+        "app.js": {
+            "strategy": "dependency_graph",
+            "entry": ["app/entry.js"],
+            "roots": ["core", "widgets", "builders", "app"]
+        }
+    }
+}
+```
+
+В этом режиме компилятор читает metadata из JS-файлов:
+
+```js
+/* @provides cabinet.widgets.client_lookup
+   @depends cabinet.core.dom, cabinet.core.events */
+```
+
+И строит итоговый порядок автоматически. Старый ordered-mode через явный список файлов остаётся полностью поддержанным.
 
 Старый формат только для CSS поддерживается для обратной совместимости:
 ```json

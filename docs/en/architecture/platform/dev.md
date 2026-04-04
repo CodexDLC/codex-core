@@ -40,21 +40,28 @@ python tools/dev/check.py --ci          # everything non-interactively (GitHub A
 
 ### Project switches
 
-Projects can keep the shared orchestration and declare their local policy with
-simple boolean attributes on `CheckRunner`:
+The preferred way to declare project-level quality gate policy is via `pyproject.toml` using the `[tool.codex-check]` section:
+
+```toml
+[tool.codex-check]
+project-name = "my-project"
+audit-flags = "--skip-editable"
+run-lint = true
+run-types = true
+run-security = true
+run-unit-tests = true
+run-integration-tests = false
+test-stages = ["unit", "integration"]
+prompt-test-stages = ["integration"]
+```
+
+Legacy support for class attributes in `CheckRunner` is still available for backwards compatibility:
 
 ```python
 class CheckRunner(BaseCheckRunner):
-    RUN_LINT = True
-    RUN_TYPES = True
-    RUN_SECURITY = True
-    RUN_EXTRA_CHECKS = True
     RUN_UNIT_TESTS = True
     RUN_INTEGRATION_TESTS = False
 ```
-
-This is the preferred extension point when a library does not need every stage.
-Use method overrides only when behavior itself must change.
 
 ### Usage in a project
 
@@ -170,6 +177,29 @@ JS source files into bundles. No Node.js, no external packages required.
     }
 }
 ```
+
+JS also supports a dependency-aware mode:
+
+```json
+{
+    "js": {
+        "app.js": {
+            "strategy": "dependency_graph",
+            "entry": ["app/entry.js"],
+            "roots": ["core", "widgets", "builders", "app"]
+        }
+    }
+}
+```
+
+In this mode the compiler reads metadata from JS files:
+
+```js
+/* @provides cabinet.widgets.client_lookup
+   @depends cabinet.core.dom, cabinet.core.events */
+```
+
+and builds the bundle order automatically. The old ordered-mode with an explicit source list remains fully supported.
 
 Old CSS-only format is supported for backwards compatibility:
 ```json

@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0] - 2026-04-04
+
+### Added
+
+- **Quality Gate**: Declarative configuration support via `pyproject.toml` (`[tool.codex-check]`).
+- **Static Compiler**: Dependency-graph strategy for JS bundles (@provides/@depends parsing and resolution).
+- **Static Compiler**: New `compile_bundle` entry point for unified asset compilation.
+
+### Changed
+
+- **Quality Gate**: Refactored `BaseCheckRunner` to prioritize `pyproject.toml` over class attributes.
+- **Developer Tools**: Simplified `tools/dev/check.py` to a thin launcher.
+- **Documentation**: Updated architecture guides to promote declarative configuration.
+
+### Fixed
+
+- **Quality Gate**: Resolved line length issues and suppressed security warnings (Bandit B603) for internal subprocess calls.
+
 ## [0.2.2] - 2026-03-29
 
 ### Fixed
