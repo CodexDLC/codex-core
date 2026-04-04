@@ -2142,18 +2142,23 @@ python tools/dev/check.py --all         # lint + types + security + unit, asks a
 python tools/dev/check.py --ci          # everything non-interactively (GitHub Actions)
 </code></pre>
 <h3 id="project-switches">Project switches</h3>
-<p>Projects can keep the shared orchestration and declare their local policy with
-simple boolean attributes on <code>CheckRunner</code>:</p>
+<p>The preferred way to declare project-level quality gate policy is via <code>pyproject.toml</code> using the <code>[tool.codex-check]</code> section:</p>
+<pre><code class="language-toml">[tool.codex-check]
+project-name = &quot;my-project&quot;
+audit-flags = &quot;--skip-editable&quot;
+run-lint = true
+run-types = true
+run-security = true
+run-unit-tests = true
+run-integration-tests = false
+test-stages = [&quot;unit&quot;, &quot;integration&quot;]
+prompt-test-stages = [&quot;integration&quot;]
+</code></pre>
+<p>Legacy support for class attributes in <code>CheckRunner</code> is still available for backwards compatibility:</p>
 <pre><code class="language-python">class CheckRunner(BaseCheckRunner):
-    RUN_LINT = True
-    RUN_TYPES = True
-    RUN_SECURITY = True
-    RUN_EXTRA_CHECKS = True
     RUN_UNIT_TESTS = True
     RUN_INTEGRATION_TESTS = False
 </code></pre>
-<p>This is the preferred extension point when a library does not need every stage.
-Use method overrides only when behavior itself must change.</p>
 <h3 id="usage-in-a-project">Usage in a project</h3>
 <pre><code class="language-python"># tools/dev/check.py
 from pathlib import Path
@@ -2258,6 +2263,22 @@ JS source files into bundles. No Node.js, no external packages required.</p>
     }
 }
 </code></pre>
+<p>JS also supports a dependency-aware mode:</p>
+<pre><code class="language-json">{
+    &quot;js&quot;: {
+        &quot;app.js&quot;: {
+            &quot;strategy&quot;: &quot;dependency_graph&quot;,
+            &quot;entry&quot;: [&quot;app/entry.js&quot;],
+            &quot;roots&quot;: [&quot;core&quot;, &quot;widgets&quot;, &quot;builders&quot;, &quot;app&quot;]
+        }
+    }
+}
+</code></pre>
+<p>In this mode the compiler reads metadata from JS files:</p>
+<pre><code class="language-js">/* @provides cabinet.widgets.client_lookup
+   @depends cabinet.core.dom, cabinet.core.events */
+</code></pre>
+<p>and builds the bundle order automatically. The old ordered-mode with an explicit source list remains fully supported.</p>
 <p>Old CSS-only format is supported for backwards compatibility:</p>
 <pre><code class="language-json">{ &quot;base.css&quot;: &quot;app.css&quot; }
 </code></pre>

@@ -2142,18 +2142,23 @@ python tools/dev/check.py --all         # lint + types + security + unit, спр
 python tools/dev/check.py --ci          # всё без промптов (GitHub Actions)
 </code></pre>
 <h3 id="_2">Проектные переключатели</h3>
-<p>Проект может оставить общую оркестрацию и задать свою локальную политику через
-булевы атрибуты в <code>CheckRunner</code>:</p>
+<p>Рекомендуемый способ задания проектной политики проверки качества — через секцию <code>[tool.codex-check]</code> в файле <code>pyproject.toml</code>:</p>
+<pre><code class="language-toml">[tool.codex-check]
+project-name = &quot;my-project&quot;
+audit-flags = &quot;--skip-editable&quot;
+run-lint = true
+run-types = true
+run-security = true
+run-unit-tests = true
+run-integration-tests = false
+test-stages = [&quot;unit&quot;, &quot;integration&quot;]
+prompt-test-stages = [&quot;integration&quot;]
+</code></pre>
+<p>Поддержка атрибутов класса в <code>CheckRunner</code> сохранена для обратной совместимости:</p>
 <pre><code class="language-python">class CheckRunner(BaseCheckRunner):
-    RUN_LINT = True
-    RUN_TYPES = True
-    RUN_SECURITY = True
-    RUN_EXTRA_CHECKS = True
     RUN_UNIT_TESTS = True
     RUN_INTEGRATION_TESTS = False
 </code></pre>
-<p>Это основной способ настройки, когда библиотеке не нужны все этапы проверки.
-Переопределяйте методы только тогда, когда нужно менять само поведение.</p>
 <h3 id="_3">Использование в проекте</h3>
 <pre><code class="language-python"># tools/dev/check.py
 from pathlib import Path
@@ -2258,6 +2263,22 @@ gen = ProjectTreeGenerator(
     }
 }
 </code></pre>
+<p>Для JS также поддерживается dependency-aware режим:</p>
+<pre><code class="language-json">{
+    &quot;js&quot;: {
+        &quot;app.js&quot;: {
+            &quot;strategy&quot;: &quot;dependency_graph&quot;,
+            &quot;entry&quot;: [&quot;app/entry.js&quot;],
+            &quot;roots&quot;: [&quot;core&quot;, &quot;widgets&quot;, &quot;builders&quot;, &quot;app&quot;]
+        }
+    }
+}
+</code></pre>
+<p>В этом режиме компилятор читает metadata из JS-файлов:</p>
+<pre><code class="language-js">/* @provides cabinet.widgets.client_lookup
+   @depends cabinet.core.dom, cabinet.core.events */
+</code></pre>
+<p>И строит итоговый порядок автоматически. Старый ordered-mode через явный список файлов остаётся полностью поддержанным.</p>
 <p>Старый формат только для CSS поддерживается для обратной совместимости:</p>
 <pre><code class="language-json">{ &quot;base.css&quot;: &quot;app.css&quot; }
 </code></pre>
