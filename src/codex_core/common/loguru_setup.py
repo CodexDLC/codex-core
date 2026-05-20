@@ -5,13 +5,22 @@ applications.  The codex_core *library* itself never calls these
 helpers; it uses the standard ``logging`` module exclusively so that
 consumers retain full control over their log infrastructure.
 
-Three configurable sinks are created by both setup functions:
+**Dev mode** (``debug=True``): three sinks — colourised stdout, rotating
+plain-text ``debug.log``, and JSON ``errors.json``.
 
-1. **stdout** — colourised, human-readable format for local development.
-2. **debug.log** — rotating plain-text file, ``enqueue=True`` for
-   async-safe writing.
-3. **errors.json** — rotating JSON-serialised file capturing ``ERROR``
-   and above; suitable for ingestion by ELK / Loki pipelines.
+**Prod mode** (``debug=False``): a single JSON-serialised stdout sink
+designed for ingestion by Grafana Alloy / Loki / ELK.  File sinks are
+omitted because container runtimes capture stdout natively.
+
+Both modes inject a **patcher** that enriches every log record with:
+
+- ``service`` — the service name passed to the setup function.
+- Any fields set via :func:`~codex_core.common.log_context.set_log_context`
+  (request_id, char_id, correlation_id, etc.).
+
+A built-in **healthcheck filter** suppresses records whose ``extra``
+contains ``healthcheck=True``, preventing ``/health`` endpoint noise
+from reaching log aggregators.
 
 Standard-library ``logging`` records are bridged via
 :class:`InterceptHandler` so that third-party libraries (SQLAlchemy,
@@ -26,7 +35,9 @@ Availability:
 import logging
 import sys
 from pathlib import Path
-from typing import TYPE_CHECKING, Protocol, runtime_checkable
+from typing import TYPE_CHECKING, Any, Protocol, runtime_checkable
+
+from .log_context import get_log_context
 
 if TYPE_CHECKING:
     from types import FrameType
@@ -40,6 +51,31 @@ except ImportError:
     logger = None
 else:
     logger = _loguru_logger
+
+
+# ---------------------------------------------------------------------------
+# Helpers
+# ---------------------------------------------------------------------------
+
+
+def _make_context_patcher(service_name: str) -> Any:
+    """Return a Loguru patcher that injects service name and contextvars."""
+
+    def _patcher(record: dict[str, Any]) -> None:
+        record["extra"]["service"] = service_name
+        record["extra"].update(get_log_context())
+
+    return _patcher
+
+
+def _healthcheck_filter(record: dict[str, Any]) -> bool:
+    """Suppress log records tagged with ``healthcheck=True``."""
+    return not record["extra"].get("healthcheck", False)
+
+
+# ---------------------------------------------------------------------------
+# InterceptHandler
+# ---------------------------------------------------------------------------
 
 
 class InterceptHandler(logging.Handler):
@@ -63,23 +99,6 @@ class InterceptHandler(logging.Handler):
     """
 
     def emit(self, record: logging.LogRecord) -> None:
-        """Forward a single ``logging.LogRecord`` to the active Loguru logger.
-
-        Resolves the Loguru level name from the record's level name,
-        falls back to the integer level when the name is unknown, then
-        walks up the call stack to find the frame that originally issued
-        the log call — ensuring Loguru displays the correct source
-        location instead of the handler internals.
-
-        Args:
-            record: The log record produced by the standard-library
-                logging infrastructure.
-
-        Note:
-            If ``loguru`` is not installed (``logger is None``), this
-            method returns silently to avoid masking the original
-            ``ImportError``.
-        """
         if logger is None:
             return
 
@@ -98,6 +117,21 @@ class InterceptHandler(logging.Handler):
         logger.opt(depth=depth, exception=record.exc_info).log(level, record.getMessage())
 
 
+# ---------------------------------------------------------------------------
+# setup_universal_logging (raw-args variant)
+# ---------------------------------------------------------------------------
+
+_CONSOLE_FORMAT = (
+    "<green>{time:YYYY-MM-DD HH:mm:ss}</green> | "
+    "<level>{level: <8}</level> | "
+    "<magenta>{extra[service]}</magenta> | "
+    "<cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> - "
+    "<level>{message}</level>"
+)
+
+_FILE_FORMAT = "{time:YYYY-MM-DD HH:mm:ss} | {level: <8} | {name}:{function}:{line} - {message}"
+
+
 def setup_universal_logging(
     log_dir: Path,
     service_name: str = "App",
@@ -113,43 +147,16 @@ def setup_universal_logging(
     full codex_core logging stack.  Callers supply raw configuration
     values directly rather than a settings object.
 
-    Sink layout after the call:
-
-    - **stdout** — colourised, ``console_level`` threshold.
-    - **<log_dir>/debug.log** — rotating plain text, ``file_level``
-      threshold, ``backtrace`` / ``diagnose`` enabled when
-      ``is_debug=True``.
-    - **<log_dir>/errors.json** — rotating JSON, ``ERROR`` threshold,
-      async-enqueued.
-    - **Root logger** — intercepted via :class:`InterceptHandler`.
-
     Args:
-        log_dir: Directory where log files are created.  Created
-            recursively if it does not exist.
-        service_name: Label embedded in the console format string to
-            distinguish output from multiple co-running services.
-        console_level: Minimum level for stdout output (e.g. ``"INFO"``).
-        file_level: Minimum level for the debug log file
-            (e.g. ``"DEBUG"``).
-        rotation: Loguru rotation threshold string (e.g. ``"10 MB"`` or
-            ``"1 day"``).
-        is_debug: When ``True``, enables full ``backtrace`` and
-            ``diagnose`` output in the debug file sink.
+        log_dir: Directory where log files are created.
+        service_name: Label embedded in the console format string.
+        console_level: Minimum level for stdout output.
+        file_level: Minimum level for the debug log file.
+        rotation: Loguru rotation threshold string.
+        is_debug: When ``True``, enables ``backtrace`` and ``diagnose``.
 
     Raises:
-        ImportError: If ``loguru`` is not installed in the environment.
-
-    Example:
-        ```python
-        from pathlib import Path
-        from codex_core.common.loguru_setup import setup_universal_logging
-
-        setup_universal_logging(
-            log_dir=Path("/var/log/myapp"),
-            service_name="booking-worker",
-            is_debug=True,
-        )
-        ```
+        ImportError: If ``loguru`` is not installed.
     """
     if logger is None:
         raise ImportError("loguru is not installed. Please install it manually: pip install loguru")
@@ -157,33 +164,27 @@ def setup_universal_logging(
     logger.remove()
     log_dir.mkdir(parents=True, exist_ok=True)
 
-    # 1. Console output
+    logger.configure(patcher=_make_context_patcher(service_name))
+
     logger.add(
         sink=sys.stdout,
         level=console_level,
         colorize=True,
-        format=(
-            "<green>{time:YYYY-MM-DD HH:mm:ss}</green> | "
-            "<level>{level: <8}</level> | "
-            f"<magenta>{service_name}</magenta> | "
-            "<cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> - "
-            "<level>{message}</level>"
-        ),
+        filter=_healthcheck_filter,
+        format=_CONSOLE_FORMAT,
     )
 
-    # 2. Debug file
     logger.add(
         sink=str(log_dir / "debug.log"),
         level=file_level,
         rotation=rotation,
         compression="zip",
-        format="{time:YYYY-MM-DD HH:mm:ss} | {level: <8} | {name}:{function}:{line} - {message}",
+        format=_FILE_FORMAT,
         enqueue=True,
         backtrace=is_debug,
         diagnose=is_debug,
     )
 
-    # 3. Errors file (JSON)
     logger.add(
         sink=str(log_dir / "errors.json"),
         level="ERROR",
@@ -193,35 +194,19 @@ def setup_universal_logging(
         enqueue=True,
     )
 
-    # 4. Intercept standard logging
     logging.basicConfig(handlers=[InterceptHandler()], level=0, force=True)
 
-    logger.info(f"Loguru setup complete for {service_name}. Logs: {log_dir}")
+    logger.info("LoguruSetupComplete log_dir={}", log_dir)
+
+
+# ---------------------------------------------------------------------------
+# LoggingSettingsProtocol
+# ---------------------------------------------------------------------------
 
 
 @runtime_checkable
 class LoggingSettingsProtocol(Protocol):
-    """Structural protocol describing the logging-related subset of settings.
-
-    Any settings object that exposes these five attributes satisfies this
-    protocol and can be passed to :func:`setup_logging` without explicit
-    inheritance.  :class:`~codex_core.settings.BaseCommonSettings`
-    satisfies this protocol out of the box when its subclass adds the
-    required logging fields.
-
-    Attributes:
-        log_level_console: Minimum Loguru level for stdout
-            (e.g. ``"INFO"``).
-        log_level_file: Minimum Loguru level for the rotating debug
-            file (e.g. ``"DEBUG"``).
-        log_rotation: Loguru rotation threshold
-            (e.g. ``"10 MB"`` or ``"1 day"``).
-        log_dir: Base directory for log files.  A service-name
-            subdirectory is appended automatically by
-            :func:`setup_logging`.
-        debug: When ``True``, enables ``backtrace`` and ``diagnose``
-            in the file sink.
-    """
+    """Structural protocol for the logging-related subset of settings."""
 
     log_level_console: str
     log_level_file: str
@@ -230,114 +215,93 @@ class LoggingSettingsProtocol(Protocol):
     debug: bool
 
 
+# ---------------------------------------------------------------------------
+# setup_logging (settings-based variant)
+# ---------------------------------------------------------------------------
+
+
 def setup_logging(
     settings: LoggingSettingsProtocol,
     service_name: str,
     intercept_loggers: list[str] | None = None,
     log_levels: dict[str, int] | None = None,
 ) -> None:
-    """Configure Loguru from a settings object conforming to :class:`LoggingSettingsProtocol`.
+    """Configure Loguru from a settings object.
 
-    Preferred entry-point for applications that use
-    :class:`~codex_core.settings.BaseCommonSettings`.  Configuration
-    is read from *settings* rather than raw arguments, enabling
-    environment-driven log levels without code changes.
+    **Dev** (``settings.debug is True``): colourised console + file sinks.
+    **Prod** (``settings.debug is False``): JSON-serialised stdout only.
 
-    PII masking is **not** handled here; it is the responsibility of
-    :class:`~codex_core.core.base_dto.BaseDTO.__repr__` at the DTO
-    level.  Do not log raw user input through this logger.
-
-    Side effects:
-        - Removes all existing Loguru handlers (``logger.remove()``).
-        - Creates ``<settings.log_dir>/<service_name>/`` directory tree.
-        - Replaces the root ``logging`` handler with
-          :class:`InterceptHandler`.
-        - Optionally replaces handlers on loggers listed in
-          *intercept_loggers*.
-        - Optionally sets log levels on loggers listed in *log_levels*.
+    Both modes apply a patcher (service name + contextvars) and a
+    healthcheck filter.
 
     Args:
-        settings: Any object satisfying :class:`LoggingSettingsProtocol`.
-            Typically a subclass of
-            :class:`~codex_core.settings.BaseCommonSettings`.
-        service_name: Identifies the service in log output and is used
-            as the leaf directory name under ``settings.log_dir``.
-        intercept_loggers: Optional list of logger names whose handlers
-            should be replaced with :class:`InterceptHandler`
-            (e.g. ``["aiogram", "sqlalchemy.engine"]``).
-        log_levels: Optional mapping of ``{logger_name: level_int}``
-            for silencing verbose third-party libraries
-            (e.g. ``{"httpx": logging.WARNING}``).
+        settings: Object satisfying :class:`LoggingSettingsProtocol`.
+        service_name: Identifies the service in log output.
+        intercept_loggers: Logger names whose handlers are replaced
+            with :class:`InterceptHandler`.
+        log_levels: ``{logger_name: level_int}`` for silencing noisy
+            libraries.
 
     Raises:
-        ImportError: If ``loguru`` is not installed in the environment.
-
-    Example:
-        ```python
-        import logging
-        from codex_core.common.loguru_setup import setup_logging
-
-        setup_logging(
-            settings=app_settings,
-            service_name="api",
-            intercept_loggers=["uvicorn", "sqlalchemy.engine"],
-            log_levels={"httpx": logging.WARNING},
-        )
-        ```
+        ImportError: If ``loguru`` is not installed.
     """
     if logger is None:
         raise ImportError("loguru is not installed. Please install it manually: pip install loguru")
 
     logger.remove()
 
-    log_dir = Path(settings.log_dir) / service_name
-    log_dir.mkdir(parents=True, exist_ok=True)
+    logger.configure(patcher=_make_context_patcher(service_name))
 
-    # Console
-    logger.add(
-        sink=sys.stdout,
-        level=settings.log_level_console,
-        colorize=True,
-        format=(
-            "<green>{time:YYYY-MM-DD HH:mm:ss}</green> | "
-            "<level>{level: <8}</level> | "
-            f"<magenta>{service_name}</magenta> | "
-            "<cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> - "
-            "<level>{message}</level>"
-        ),
-    )
+    if settings.debug:
+        # ── Dev: colourised console + file sinks ──
+        log_dir = Path(settings.log_dir) / service_name
+        log_dir.mkdir(parents=True, exist_ok=True)
 
-    # Debug file
-    logger.add(
-        sink=str(log_dir / "debug.log"),
-        level=settings.log_level_file,
-        rotation=settings.log_rotation,
-        compression="zip",
-        format="{time:YYYY-MM-DD HH:mm:ss} | {level: <8} | {name}:{function}:{line} - {message}",
-        enqueue=True,
-        backtrace=settings.debug,
-        diagnose=settings.debug,
-    )
+        logger.add(
+            sink=sys.stdout,
+            level=settings.log_level_console,
+            colorize=True,
+            filter=_healthcheck_filter,
+            format=_CONSOLE_FORMAT,
+        )
 
-    # Errors file (JSON)
-    logger.add(
-        sink=str(log_dir / "errors.json"),
-        level="ERROR",
-        serialize=True,
-        rotation=settings.log_rotation,
-        compression="zip",
-        enqueue=True,
-    )
+        logger.add(
+            sink=str(log_dir / "debug.log"),
+            level=settings.log_level_file,
+            rotation=settings.log_rotation,
+            compression="zip",
+            format=_FILE_FORMAT,
+            enqueue=True,
+            backtrace=True,
+            diagnose=True,
+        )
+
+        logger.add(
+            sink=str(log_dir / "errors.json"),
+            level="ERROR",
+            serialize=True,
+            rotation=settings.log_rotation,
+            compression="zip",
+            enqueue=True,
+        )
+    else:
+        # ── Prod: JSON stdout only (Alloy / Loki / ELK ingestion) ──
+        logger.add(
+            sink=sys.stdout,
+            level=settings.log_level_console,
+            serialize=True,
+            colorize=False,
+            filter=_healthcheck_filter,
+            enqueue=True,
+        )
 
     # Intercept standard logging
     logging.basicConfig(handlers=[InterceptHandler()], level=0, force=True)
 
-    # Intercept specified loggers
     if intercept_loggers:
         for name in intercept_loggers:
             logging.getLogger(name).handlers = [InterceptHandler()]
 
-    # Set levels for noisy libraries
     if log_levels:
         for name, level in log_levels.items():
             logging.getLogger(name).setLevel(level)

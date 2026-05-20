@@ -1,28 +1,62 @@
-"""Structured logging context bound to a named task or worker.
+"""Structured logging context: per-request contextvars and per-task wrappers.
 
-Provides :class:`TaskLogContext` — a thin, stateful wrapper around
-``logging.Logger`` that automatically enriches every log record with
-a fixed set of structured fields (task name, worker name, arbitrary
-extras).
+Two complementary mechanisms:
 
-This module intentionally avoids any dependency on Loguru so that it
-works with any log sink: standard-library ``logging``, Loguru (via
-:class:`~codex_core.common.loguru_setup.InterceptHandler`), JSON
-formatters, ELK, or Loki.
+1. **contextvars-based context** — ``set_log_context`` / ``clear_log_context`` /
+   ``get_log_context``.  Designed for async request/task scoping: set fields once
+   at the start of a request or worker task, and every ``logger.*()`` call in that
+   async context automatically includes them via the Loguru patcher configured in
+   :func:`~codex_core.common.loguru_setup.setup_logging`.
 
-Example:
+2. **TaskLogContext** — a stateful wrapper around ``logging.Logger`` for code that
+   uses the standard library directly (see class docstring for details).
+
+Example (contextvars):
+    ```python
+    from codex_core.common.log_context import set_log_context, clear_log_context
+
+    set_log_context(request_id="abc-123", char_id=42)
+    logger.info("CombatMoveSubmitted")  # extra contains request_id, char_id
+    clear_log_context()
+    ```
+
+Example (TaskLogContext):
     ```python
     from codex_core.common.log_context import TaskLogContext
 
     log = TaskLogContext("send_booking_notification", worker="notification_worker")
     log.info("Processing appointment", extra={"appointment_id": 123})
-    # LogRecord contains: task="send_booking_notification",
-    #   worker="notification_worker", appointment_id=123
     ```
 """
 
+import contextvars
 import logging
 from typing import Any
+
+# ---------------------------------------------------------------------------
+# Async-safe contextvars log context
+# ---------------------------------------------------------------------------
+
+_log_context: contextvars.ContextVar[dict[str, Any]] = contextvars.ContextVar(
+    "log_context", default={}
+)
+
+
+def set_log_context(**kwargs: Any) -> None:
+    """Merge *kwargs* into the current async-local log context."""
+    current = _log_context.get().copy()
+    current.update(kwargs)
+    _log_context.set(current)
+
+
+def clear_log_context() -> None:
+    """Reset the async-local log context to empty."""
+    _log_context.set({})
+
+
+def get_log_context() -> dict[str, Any]:
+    """Return a shallow copy of the current async-local log context."""
+    return _log_context.get().copy()
 
 
 class TaskLogContext:
