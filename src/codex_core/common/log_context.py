@@ -37,26 +37,26 @@ from typing import Any
 # Async-safe contextvars log context
 # ---------------------------------------------------------------------------
 
-_log_context: contextvars.ContextVar[dict[str, Any]] = contextvars.ContextVar(
-    "log_context", default={}
+_log_context: contextvars.ContextVar[dict[str, Any] | None] = contextvars.ContextVar(
+    "log_context", default=None
 )
 
 
 def set_log_context(**kwargs: Any) -> None:
     """Merge *kwargs* into the current async-local log context."""
-    current = _log_context.get().copy()
+    current = (_log_context.get() or {}).copy()
     current.update(kwargs)
     _log_context.set(current)
 
 
 def clear_log_context() -> None:
     """Reset the async-local log context to empty."""
-    _log_context.set({})
+    _log_context.set(None)
 
 
 def get_log_context() -> dict[str, Any]:
     """Return a shallow copy of the current async-local log context."""
-    return _log_context.get().copy()
+    return (_log_context.get() or {}).copy()
 
 
 class TaskLogContext:
