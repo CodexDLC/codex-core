@@ -1611,6 +1611,56 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#codex_core.common.log_context-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Functions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#codex_core.common.log_context.set_log_context" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;set_log_context
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#codex_core.common.log_context.clear_log_context" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;clear_log_context
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#codex_core.common.log_context.get_log_context" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;get_log_context
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1648,40 +1698,6 @@
       
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label=" InterceptHandler">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#codex_core.common.loguru_setup.InterceptHandler-functions" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Functions
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Functions">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#codex_core.common.loguru_setup.InterceptHandler.emit" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;emit
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
@@ -2320,6 +2336,56 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#codex_core.common.log_context-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Functions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#codex_core.common.log_context.set_log_context" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;set_log_context
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#codex_core.common.log_context.clear_log_context" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;clear_log_context
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#codex_core.common.log_context.get_log_context" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;get_log_context
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -2357,40 +2423,6 @@
       
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label=" InterceptHandler">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#codex_core.common.loguru_setup.InterceptHandler-functions" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Functions
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Functions">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#codex_core.common.loguru_setup.InterceptHandler.emit" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        <code class="doc-symbol doc-symbol-toc doc-symbol-method"></code>&nbsp;emit
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
@@ -3718,27 +3750,37 @@ sanitize_for_sms(&quot;Appointment at 10:00&quot;, 15)
 
     <div class="doc doc-contents first">
 
-        <p>Structured logging context bound to a named task or worker.</p>
-<p>Provides :class:<code>TaskLogContext</code> — a thin, stateful wrapper around
-<code>logging.Logger</code> that automatically enriches every log record with
-a fixed set of structured fields (task name, worker name, arbitrary
-extras).</p>
-<p>This module intentionally avoids any dependency on Loguru so that it
-works with any log sink: standard-library <code>logging</code>, Loguru (via
-:class:<code>~codex_core.common.loguru_setup.InterceptHandler</code>), JSON
-formatters, ELK, or Loki.</p>
-
-
-<details class="example" open>
-  <summary>Example</summary>
-  <pre><code class="language-python">from codex_core.common.log_context import TaskLogContext
-
-log = TaskLogContext(&quot;send_booking_notification&quot;, worker=&quot;notification_worker&quot;)
-log.info(&quot;Processing appointment&quot;, extra={&quot;appointment_id&quot;: 123})
-# LogRecord contains: task=&quot;send_booking_notification&quot;,
-#   worker=&quot;notification_worker&quot;, appointment_id=123
+        <p>Structured logging context: per-request contextvars and per-task wrappers.</p>
+<p>Two complementary mechanisms:</p>
+<ol>
+<li>
+<p><strong>contextvars-based context</strong> — <code>set_log_context</code> / <code>clear_log_context</code> /
+   <code>get_log_context</code>.  Designed for async request/task scoping: set fields once
+   at the start of a request or worker task, and every <code>logger.*()</code> call in that
+   async context automatically includes them via the Loguru patcher configured in
+   :func:<code>~codex_core.common.loguru_setup.setup_logging</code>.</p>
+</li>
+<li>
+<p><strong>TaskLogContext</strong> — a stateful wrapper around <code>logging.Logger</code> for code that
+   uses the standard library directly (see class docstring for details).</p>
+</li>
+</ol>
+<p>Example (contextvars):
+    ```python
+    from codex_core.common.log_context import set_log_context, clear_log_context</p>
+<pre><code>set_log_context(request_id="abc-123", char_id=42)
+logger.info("CombatMoveSubmitted")  # extra contains request_id, char_id
+clear_log_context()
+```
 </code></pre>
-</details>
+<p>Example (TaskLogContext):
+    ```python
+    from codex_core.common.log_context import TaskLogContext</p>
+<pre><code>log = TaskLogContext("send_booking_notification", worker="notification_worker")
+log.info("Processing appointment", extra={"appointment_id": 123})
+```
+</code></pre>
+
 
 
 
@@ -3873,41 +3915,7 @@ log.error(&quot;Slot not found&quot;, extra={&quot;slot_id&quot;: 7})
 
               <details class="mkdocstrings-source">
                 <summary>Source code in <code>src/codex_core/common/log_context.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 28</span>
-<span class="normal"> 29</span>
-<span class="normal"> 30</span>
-<span class="normal"> 31</span>
-<span class="normal"> 32</span>
-<span class="normal"> 33</span>
-<span class="normal"> 34</span>
-<span class="normal"> 35</span>
-<span class="normal"> 36</span>
-<span class="normal"> 37</span>
-<span class="normal"> 38</span>
-<span class="normal"> 39</span>
-<span class="normal"> 40</span>
-<span class="normal"> 41</span>
-<span class="normal"> 42</span>
-<span class="normal"> 43</span>
-<span class="normal"> 44</span>
-<span class="normal"> 45</span>
-<span class="normal"> 46</span>
-<span class="normal"> 47</span>
-<span class="normal"> 48</span>
-<span class="normal"> 49</span>
-<span class="normal"> 50</span>
-<span class="normal"> 51</span>
-<span class="normal"> 52</span>
-<span class="normal"> 53</span>
-<span class="normal"> 54</span>
-<span class="normal"> 55</span>
-<span class="normal"> 56</span>
-<span class="normal"> 57</span>
-<span class="normal"> 58</span>
-<span class="normal"> 59</span>
-<span class="normal"> 60</span>
-<span class="normal"> 61</span>
-<span class="normal"> 62</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 62</span>
 <span class="normal"> 63</span>
 <span class="normal"> 64</span>
 <span class="normal"> 65</span>
@@ -3985,7 +3993,41 @@ log.error(&quot;Slot not found&quot;, extra={&quot;slot_id&quot;: 7})
 <span class="normal">137</span>
 <span class="normal">138</span>
 <span class="normal">139</span>
-<span class="normal">140</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">TaskLogContext</span><span class="p">:</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span>
+<span class="normal">159</span>
+<span class="normal">160</span>
+<span class="normal">161</span>
+<span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span>
+<span class="normal">168</span>
+<span class="normal">169</span>
+<span class="normal">170</span>
+<span class="normal">171</span>
+<span class="normal">172</span>
+<span class="normal">173</span>
+<span class="normal">174</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">TaskLogContext</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Structured logging adapter that binds context fields to every record.</span>
 
 <span class="sd">    Wraps a standard ``logging.Logger`` and automatically merges a</span>
@@ -4209,16 +4251,16 @@ log.error(&quot;Slot not found&quot;, extra={&quot;slot_id&quot;: 7})
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>src/codex_core/common/log_context.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">83</span>
-<span class="normal">84</span>
-<span class="normal">85</span>
-<span class="normal">86</span>
-<span class="normal">87</span>
-<span class="normal">88</span>
-<span class="normal">89</span>
-<span class="normal">90</span>
-<span class="normal">91</span>
-<span class="normal">92</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">extra</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">debug</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">extra</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Emit a ``DEBUG`` record enriched with the bound context fields.</span>
 
 <span class="sd">    Args:</span>
@@ -4329,16 +4371,16 @@ log.error(&quot;Slot not found&quot;, extra={&quot;slot_id&quot;: 7})
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>src/codex_core/common/log_context.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 94</span>
-<span class="normal"> 95</span>
-<span class="normal"> 96</span>
-<span class="normal"> 97</span>
-<span class="normal"> 98</span>
-<span class="normal"> 99</span>
-<span class="normal">100</span>
-<span class="normal">101</span>
-<span class="normal">102</span>
-<span class="normal">103</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">extra</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">extra</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Emit an ``INFO`` record enriched with the bound context fields.</span>
 
 <span class="sd">    Args:</span>
@@ -4449,16 +4491,16 @@ log.error(&quot;Slot not found&quot;, extra={&quot;slot_id&quot;: 7})
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>src/codex_core/common/log_context.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">105</span>
-<span class="normal">106</span>
-<span class="normal">107</span>
-<span class="normal">108</span>
-<span class="normal">109</span>
-<span class="normal">110</span>
-<span class="normal">111</span>
-<span class="normal">112</span>
-<span class="normal">113</span>
-<span class="normal">114</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">warning</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">extra</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">warning</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">extra</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Emit a ``WARNING`` record enriched with the bound context fields.</span>
 
 <span class="sd">    Args:</span>
@@ -4569,16 +4611,16 @@ log.error(&quot;Slot not found&quot;, extra={&quot;slot_id&quot;: 7})
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>src/codex_core/common/log_context.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">116</span>
-<span class="normal">117</span>
-<span class="normal">118</span>
-<span class="normal">119</span>
-<span class="normal">120</span>
-<span class="normal">121</span>
-<span class="normal">122</span>
-<span class="normal">123</span>
-<span class="normal">124</span>
-<span class="normal">125</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">extra</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span>
+<span class="normal">159</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">extra</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Emit an ``ERROR`` record enriched with the bound context fields.</span>
 
 <span class="sd">    Args:</span>
@@ -4692,20 +4734,20 @@ exception info (<code>exc_info=True</code> is implicit).  Call inside an
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>src/codex_core/common/log_context.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">127</span>
-<span class="normal">128</span>
-<span class="normal">129</span>
-<span class="normal">130</span>
-<span class="normal">131</span>
-<span class="normal">132</span>
-<span class="normal">133</span>
-<span class="normal">134</span>
-<span class="normal">135</span>
-<span class="normal">136</span>
-<span class="normal">137</span>
-<span class="normal">138</span>
-<span class="normal">139</span>
-<span class="normal">140</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">exception</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">extra</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">161</span>
+<span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span>
+<span class="normal">168</span>
+<span class="normal">169</span>
+<span class="normal">170</span>
+<span class="normal">171</span>
+<span class="normal">172</span>
+<span class="normal">173</span>
+<span class="normal">174</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">exception</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">extra</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Emit an ``ERROR`` record with exception traceback and bound context.</span>
 
 <span class="sd">    Equivalent to :meth:`error` but always captures the current</span>
@@ -4732,7 +4774,92 @@ exception info (<code>exc_info=True</code> is implicit).  Call inside an
     </div>
 
 </div>
+<h3 id="codex_core.common.log_context-functions">Functions</h3>
 
+<div class="doc doc-object doc-function">
+
+
+<h4 id="codex_core.common.log_context.set_log_context" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">set_log_context</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Merge <em>kwargs</em> into the current async-local log context.</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>src/codex_core/common/log_context.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">set_log_context</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Merge *kwargs* into the current async-local log context.&quot;&quot;&quot;</span>
+    <span class="n">current</span> <span class="o">=</span> <span class="n">_log_context</span><span class="o">.</span><span class="n">get</span><span class="p">()</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">current</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">_log_context</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">current</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="codex_core.common.log_context.clear_log_context" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">clear_log_context</span><span class="p">()</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Reset the async-local log context to empty.</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>src/codex_core/common/log_context.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">clear_log_context</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Reset the async-local log context to empty.&quot;&quot;&quot;</span>
+    <span class="n">_log_context</span><span class="o">.</span><span class="n">set</span><span class="p">({})</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h4 id="codex_core.common.log_context.get_log_context" class="doc doc-heading">
+<code class="doc-symbol doc-symbol-heading doc-symbol-function"></code>            <code class="highlight language-python"><span class="n">get_log_context</span><span class="p">()</span></code>
+
+</h4>
+
+
+    <div class="doc doc-contents ">
+
+        <p>Return a shallow copy of the current async-local log context.</p>
+
+
+            <details class="mkdocstrings-source">
+              <summary>Source code in <code>src/codex_core/common/log_context.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_log_context</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a shallow copy of the current async-local log context.&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_log_context</span><span class="o">.</span><span class="n">get</span><span class="p">()</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
 
 
 
@@ -4759,14 +4886,20 @@ exception info (<code>exc_info=True</code> is implicit).  Call inside an
 applications.  The codex_core <em>library</em> itself never calls these
 helpers; it uses the standard <code>logging</code> module exclusively so that
 consumers retain full control over their log infrastructure.</p>
-<p>Three configurable sinks are created by both setup functions:</p>
-<ol>
-<li><strong>stdout</strong> — colourised, human-readable format for local development.</li>
-<li><strong>debug.log</strong> — rotating plain-text file, <code>enqueue=True</code> for
-   async-safe writing.</li>
-<li><strong>errors.json</strong> — rotating JSON-serialised file capturing <code>ERROR</code>
-   and above; suitable for ingestion by ELK / Loki pipelines.</li>
-</ol>
+<p><strong>Dev mode</strong> (<code>debug=True</code>): three sinks — colourised stdout, rotating
+plain-text <code>debug.log</code>, and JSON <code>errors.json</code>.</p>
+<p><strong>Prod mode</strong> (<code>debug=False</code>): a single JSON-serialised stdout sink
+designed for ingestion by Grafana Alloy / Loki / ELK.  File sinks are
+omitted because container runtimes capture stdout natively.</p>
+<p>Both modes inject a <strong>patcher</strong> that enriches every log record with:</p>
+<ul>
+<li><code>service</code> — the service name passed to the setup function.</li>
+<li>Any fields set via :func:<code>~codex_core.common.log_context.set_log_context</code>
+  (request_id, char_id, correlation_id, etc.).</li>
+</ul>
+<p>A built-in <strong>healthcheck filter</strong> suppresses records whose <code>extra</code>
+contains <code>healthcheck=True</code>, preventing <code>/health</code> endpoint noise
+from reaching log aggregators.</p>
 <p>Standard-library <code>logging</code> records are bridged via
 :class:<code>InterceptHandler</code> so that third-party libraries (SQLAlchemy,
 httpx, aiogram, etc.) are automatically captured by Loguru.</p>
@@ -4840,60 +4973,43 @@ logging.basicConfig(handlers=[InterceptHandler()], level=0, force=True)
 
               <details class="mkdocstrings-source">
                 <summary>Source code in <code>src/codex_core/common/loguru_setup.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">45</span>
-<span class="normal">46</span>
-<span class="normal">47</span>
-<span class="normal">48</span>
-<span class="normal">49</span>
-<span class="normal">50</span>
-<span class="normal">51</span>
-<span class="normal">52</span>
-<span class="normal">53</span>
-<span class="normal">54</span>
-<span class="normal">55</span>
-<span class="normal">56</span>
-<span class="normal">57</span>
-<span class="normal">58</span>
-<span class="normal">59</span>
-<span class="normal">60</span>
-<span class="normal">61</span>
-<span class="normal">62</span>
-<span class="normal">63</span>
-<span class="normal">64</span>
-<span class="normal">65</span>
-<span class="normal">66</span>
-<span class="normal">67</span>
-<span class="normal">68</span>
-<span class="normal">69</span>
-<span class="normal">70</span>
-<span class="normal">71</span>
-<span class="normal">72</span>
-<span class="normal">73</span>
-<span class="normal">74</span>
-<span class="normal">75</span>
-<span class="normal">76</span>
-<span class="normal">77</span>
-<span class="normal">78</span>
-<span class="normal">79</span>
-<span class="normal">80</span>
-<span class="normal">81</span>
-<span class="normal">82</span>
-<span class="normal">83</span>
-<span class="normal">84</span>
-<span class="normal">85</span>
-<span class="normal">86</span>
-<span class="normal">87</span>
-<span class="normal">88</span>
-<span class="normal">89</span>
-<span class="normal">90</span>
-<span class="normal">91</span>
-<span class="normal">92</span>
-<span class="normal">93</span>
-<span class="normal">94</span>
-<span class="normal">95</span>
-<span class="normal">96</span>
-<span class="normal">97</span>
-<span class="normal">98</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">InterceptHandler</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">Handler</span><span class="p">):</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 81</span>
+<span class="normal"> 82</span>
+<span class="normal"> 83</span>
+<span class="normal"> 84</span>
+<span class="normal"> 85</span>
+<span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">InterceptHandler</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">Handler</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Bridge standard-library ``logging`` records to the Loguru sink.</span>
 
 <span class="sd">    Install this handler on the root logger (or any named logger) to</span>
@@ -4914,23 +5030,6 @@ logging.basicConfig(handlers=[InterceptHandler()], level=0, force=True)
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">emit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">record</span><span class="p">:</span> <span class="n">logging</span><span class="o">.</span><span class="n">LogRecord</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Forward a single ``logging.LogRecord`` to the active Loguru logger.</span>
-
-<span class="sd">        Resolves the Loguru level name from the record&#39;s level name,</span>
-<span class="sd">        falls back to the integer level when the name is unknown, then</span>
-<span class="sd">        walks up the call stack to find the frame that originally issued</span>
-<span class="sd">        the log call — ensuring Loguru displays the correct source</span>
-<span class="sd">        location instead of the handler internals.</span>
-
-<span class="sd">        Args:</span>
-<span class="sd">            record: The log record produced by the standard-library</span>
-<span class="sd">                logging infrastructure.</span>
-
-<span class="sd">        Note:</span>
-<span class="sd">            If ``loguru`` is not installed (``logger is None``), this</span>
-<span class="sd">            method returns silently to avoid masking the original</span>
-<span class="sd">            ``ImportError``.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">logger</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span>
 
@@ -4961,140 +5060,7 @@ logging.basicConfig(handlers=[InterceptHandler()], level=0, force=True)
 
 
 
-<h5 id="codex_core.common.loguru_setup.InterceptHandler-functions">Functions</h5>
 
-<div class="doc doc-object doc-function">
-
-
-<h6 id="codex_core.common.loguru_setup.InterceptHandler.emit" class="doc doc-heading">
-<code class="doc-symbol doc-symbol-heading doc-symbol-method"></code>            <code class="highlight language-python"><span class="n">emit</span><span class="p">(</span><span class="n">record</span><span class="p">)</span></code>
-
-</h6>
-
-
-    <div class="doc doc-contents ">
-
-        <p>Forward a single <code>logging.LogRecord</code> to the active Loguru logger.</p>
-<p>Resolves the Loguru level name from the record's level name,
-falls back to the integer level when the name is unknown, then
-walks up the call stack to find the frame that originally issued
-the log call — ensuring Loguru displays the correct source
-location instead of the handler internals.</p>
-
-
-<p><span class="doc-section-title">Parameters:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Description</th>
-          <th>Default</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                <code>record</code>
-            </td>
-            <td>
-                  <code><span title="logging.LogRecord">LogRecord</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>The log record produced by the standard-library
-logging infrastructure.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-<details class="note" open>
-  <summary>Note</summary>
-  <p>If <code>loguru</code> is not installed (<code>logger is None</code>), this
-method returns silently to avoid masking the original
-<code>ImportError</code>.</p>
-</details>
-
-            <details class="mkdocstrings-source">
-              <summary>Source code in <code>src/codex_core/common/loguru_setup.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">65</span>
-<span class="normal">66</span>
-<span class="normal">67</span>
-<span class="normal">68</span>
-<span class="normal">69</span>
-<span class="normal">70</span>
-<span class="normal">71</span>
-<span class="normal">72</span>
-<span class="normal">73</span>
-<span class="normal">74</span>
-<span class="normal">75</span>
-<span class="normal">76</span>
-<span class="normal">77</span>
-<span class="normal">78</span>
-<span class="normal">79</span>
-<span class="normal">80</span>
-<span class="normal">81</span>
-<span class="normal">82</span>
-<span class="normal">83</span>
-<span class="normal">84</span>
-<span class="normal">85</span>
-<span class="normal">86</span>
-<span class="normal">87</span>
-<span class="normal">88</span>
-<span class="normal">89</span>
-<span class="normal">90</span>
-<span class="normal">91</span>
-<span class="normal">92</span>
-<span class="normal">93</span>
-<span class="normal">94</span>
-<span class="normal">95</span>
-<span class="normal">96</span>
-<span class="normal">97</span>
-<span class="normal">98</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">emit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">record</span><span class="p">:</span> <span class="n">logging</span><span class="o">.</span><span class="n">LogRecord</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Forward a single ``logging.LogRecord`` to the active Loguru logger.</span>
-
-<span class="sd">    Resolves the Loguru level name from the record&#39;s level name,</span>
-<span class="sd">    falls back to the integer level when the name is unknown, then</span>
-<span class="sd">    walks up the call stack to find the frame that originally issued</span>
-<span class="sd">    the log call — ensuring Loguru displays the correct source</span>
-<span class="sd">    location instead of the handler internals.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        record: The log record produced by the standard-library</span>
-<span class="sd">            logging infrastructure.</span>
-
-<span class="sd">    Note:</span>
-<span class="sd">        If ``loguru`` is not installed (``logger is None``), this</span>
-<span class="sd">        method returns silently to avoid masking the original</span>
-<span class="sd">        ``ImportError``.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">logger</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">return</span>
-
-    <span class="n">level</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">int</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">level</span> <span class="o">=</span> <span class="n">logger</span><span class="o">.</span><span class="n">level</span><span class="p">(</span><span class="n">record</span><span class="o">.</span><span class="n">levelname</span><span class="p">)</span><span class="o">.</span><span class="n">name</span>
-    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-        <span class="n">level</span> <span class="o">=</span> <span class="n">record</span><span class="o">.</span><span class="n">levelno</span>
-
-    <span class="n">frame</span><span class="p">:</span> <span class="n">FrameType</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">currentframe</span><span class="p">()</span>
-    <span class="n">depth</span> <span class="o">=</span> <span class="mi">6</span>
-    <span class="k">while</span> <span class="n">frame</span> <span class="ow">and</span> <span class="n">frame</span><span class="o">.</span><span class="n">f_code</span><span class="o">.</span><span class="n">co_filename</span> <span class="o">==</span> <span class="n">logging</span><span class="o">.</span><span class="vm">__file__</span><span class="p">:</span>
-        <span class="n">frame</span> <span class="o">=</span> <span class="n">frame</span><span class="o">.</span><span class="n">f_back</span>
-        <span class="n">depth</span> <span class="o">+=</span> <span class="mi">1</span>
-
-    <span class="n">logger</span><span class="o">.</span><span class="n">opt</span><span class="p">(</span><span class="n">depth</span><span class="o">=</span><span class="n">depth</span><span class="p">,</span> <span class="n">exception</span><span class="o">=</span><span class="n">record</span><span class="o">.</span><span class="n">exc_info</span><span class="p">)</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="n">record</span><span class="o">.</span><span class="n">getMessage</span><span class="p">())</span>
-</code></pre></div></td></tr></table></div>
-            </details>
-    </div>
-
-</div>
 
 
 
@@ -5121,87 +5087,7 @@ method returns silently to avoid masking the original
 
 
 
-        <p>Structural protocol describing the logging-related subset of settings.</p>
-<p>Any settings object that exposes these five attributes satisfies this
-protocol and can be passed to :func:<code>setup_logging</code> without explicit
-inheritance.  :class:<code>~codex_core.settings.BaseCommonSettings</code>
-satisfies this protocol out of the box when its subclass adds the
-required logging fields.</p>
-
-
-<p><span class="doc-section-title">Attributes:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td><code><span title="codex_core.common.loguru_setup.LoggingSettingsProtocol.log_level_console">log_level_console</span></code></td>
-            <td>
-                  <code><span title="str">str</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Minimum Loguru level for stdout
-(e.g. <code>"INFO"</code>).</p>
-              </div>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td><code><span title="codex_core.common.loguru_setup.LoggingSettingsProtocol.log_level_file">log_level_file</span></code></td>
-            <td>
-                  <code><span title="str">str</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Minimum Loguru level for the rotating debug
-file (e.g. <code>"DEBUG"</code>).</p>
-              </div>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td><code><span title="codex_core.common.loguru_setup.LoggingSettingsProtocol.log_rotation">log_rotation</span></code></td>
-            <td>
-                  <code><span title="str">str</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Loguru rotation threshold
-(e.g. <code>"10 MB"</code> or <code>"1 day"</code>).</p>
-              </div>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td><code><span title="codex_core.common.loguru_setup.LoggingSettingsProtocol.log_dir">log_dir</span></code></td>
-            <td>
-                  <code><span title="str">str</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>Base directory for log files.  A service-name
-subdirectory is appended automatically by
-:func:<code>setup_logging</code>.</p>
-              </div>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td><code><span title="codex_core.common.loguru_setup.LoggingSettingsProtocol.debug">debug</span></code></td>
-            <td>
-                  <code><span title="bool">bool</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>When <code>True</code>, enables <code>backtrace</code> and <code>diagnose</code>
-in the file sink.</p>
-              </div>
-            </td>
-          </tr>
-      </tbody>
-    </table>
+        <p>Structural protocol for the logging-related subset of settings.</p>
 
 
 
@@ -5212,12 +5098,7 @@ in the file sink.</p>
 
               <details class="mkdocstrings-source">
                 <summary>Source code in <code>src/codex_core/common/loguru_setup.py</code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">202</span>
-<span class="normal">203</span>
-<span class="normal">204</span>
-<span class="normal">205</span>
-<span class="normal">206</span>
-<span class="normal">207</span>
+                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">207</span>
 <span class="normal">208</span>
 <span class="normal">209</span>
 <span class="normal">210</span>
@@ -5225,44 +5106,9 @@ in the file sink.</p>
 <span class="normal">212</span>
 <span class="normal">213</span>
 <span class="normal">214</span>
-<span class="normal">215</span>
-<span class="normal">216</span>
-<span class="normal">217</span>
-<span class="normal">218</span>
-<span class="normal">219</span>
-<span class="normal">220</span>
-<span class="normal">221</span>
-<span class="normal">222</span>
-<span class="normal">223</span>
-<span class="normal">224</span>
-<span class="normal">225</span>
-<span class="normal">226</span>
-<span class="normal">227</span>
-<span class="normal">228</span>
-<span class="normal">229</span>
-<span class="normal">230</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@runtime_checkable</span>
+<span class="normal">215</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@runtime_checkable</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">LoggingSettingsProtocol</span><span class="p">(</span><span class="n">Protocol</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Structural protocol describing the logging-related subset of settings.</span>
-
-<span class="sd">    Any settings object that exposes these five attributes satisfies this</span>
-<span class="sd">    protocol and can be passed to :func:`setup_logging` without explicit</span>
-<span class="sd">    inheritance.  :class:`~codex_core.settings.BaseCommonSettings`</span>
-<span class="sd">    satisfies this protocol out of the box when its subclass adds the</span>
-<span class="sd">    required logging fields.</span>
-
-<span class="sd">    Attributes:</span>
-<span class="sd">        log_level_console: Minimum Loguru level for stdout</span>
-<span class="sd">            (e.g. ``&quot;INFO&quot;``).</span>
-<span class="sd">        log_level_file: Minimum Loguru level for the rotating debug</span>
-<span class="sd">            file (e.g. ``&quot;DEBUG&quot;``).</span>
-<span class="sd">        log_rotation: Loguru rotation threshold</span>
-<span class="sd">            (e.g. ``&quot;10 MB&quot;`` or ``&quot;1 day&quot;``).</span>
-<span class="sd">        log_dir: Base directory for log files.  A service-name</span>
-<span class="sd">            subdirectory is appended automatically by</span>
-<span class="sd">            :func:`setup_logging`.</span>
-<span class="sd">        debug: When ``True``, enables ``backtrace`` and ``diagnose``</span>
-<span class="sd">            in the file sink.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Structural protocol for the logging-related subset of settings.&quot;&quot;&quot;</span>
 
     <span class="n">log_level_console</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">log_level_file</span><span class="p">:</span> <span class="nb">str</span>
@@ -5310,16 +5156,6 @@ in the file sink.</p>
 :class:<code>~codex_core.settings.BaseCommonSettings</code> but still want the
 full codex_core logging stack.  Callers supply raw configuration
 values directly rather than a settings object.</p>
-<p>Sink layout after the call:</p>
-<ul>
-<li><strong>stdout</strong> — colourised, <code>console_level</code> threshold.</li>
-<li><strong><log_dir>/debug.log</strong> — rotating plain text, <code>file_level</code>
-  threshold, <code>backtrace</code> / <code>diagnose</code> enabled when
-  <code>is_debug=True</code>.</li>
-<li><strong><log_dir>/errors.json</strong> — rotating JSON, <code>ERROR</code> threshold,
-  async-enqueued.</li>
-<li><strong>Root logger</strong> — intercepted via :class:<code>InterceptHandler</code>.</li>
-</ul>
 
 
 <p><span class="doc-section-title">Parameters:</span></p>
@@ -5342,8 +5178,7 @@ values directly rather than a settings object.</p>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>Directory where log files are created.  Created
-recursively if it does not exist.</p>
+                <p>Directory where log files are created.</p>
               </div>
             </td>
             <td>
@@ -5359,8 +5194,7 @@ recursively if it does not exist.</p>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>Label embedded in the console format string to
-distinguish output from multiple co-running services.</p>
+                <p>Label embedded in the console format string.</p>
               </div>
             </td>
             <td>
@@ -5376,7 +5210,7 @@ distinguish output from multiple co-running services.</p>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>Minimum level for stdout output (e.g. <code>"INFO"</code>).</p>
+                <p>Minimum level for stdout output.</p>
               </div>
             </td>
             <td>
@@ -5392,8 +5226,7 @@ distinguish output from multiple co-running services.</p>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>Minimum level for the debug log file
-(e.g. <code>"DEBUG"</code>).</p>
+                <p>Minimum level for the debug log file.</p>
               </div>
             </td>
             <td>
@@ -5409,8 +5242,7 @@ distinguish output from multiple co-running services.</p>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>Loguru rotation threshold string (e.g. <code>"10 MB"</code> or
-<code>"1 day"</code>).</p>
+                <p>Loguru rotation threshold string.</p>
               </div>
             </td>
             <td>
@@ -5426,8 +5258,7 @@ distinguish output from multiple co-running services.</p>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>When <code>True</code>, enables full <code>backtrace</code> and
-<code>diagnose</code> output in the debug file sink.</p>
+                <p>When <code>True</code>, enables <code>backtrace</code> and <code>diagnose</code>.</p>
               </div>
             </td>
             <td>
@@ -5453,7 +5284,7 @@ distinguish output from multiple co-running services.</p>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>If <code>loguru</code> is not installed in the environment.</p>
+                <p>If <code>loguru</code> is not installed.</p>
               </div>
             </td>
           </tr>
@@ -5461,56 +5292,9 @@ distinguish output from multiple co-running services.</p>
     </table>
 
 
-<details class="example" open>
-  <summary>Example</summary>
-  <pre><code class="language-python">from pathlib import Path
-from codex_core.common.loguru_setup import setup_universal_logging
-
-setup_universal_logging(
-    log_dir=Path(&quot;/var/log/myapp&quot;),
-    service_name=&quot;booking-worker&quot;,
-    is_debug=True,
-)
-</code></pre>
-</details>
-
             <details class="mkdocstrings-source">
               <summary>Source code in <code>src/codex_core/common/loguru_setup.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">101</span>
-<span class="normal">102</span>
-<span class="normal">103</span>
-<span class="normal">104</span>
-<span class="normal">105</span>
-<span class="normal">106</span>
-<span class="normal">107</span>
-<span class="normal">108</span>
-<span class="normal">109</span>
-<span class="normal">110</span>
-<span class="normal">111</span>
-<span class="normal">112</span>
-<span class="normal">113</span>
-<span class="normal">114</span>
-<span class="normal">115</span>
-<span class="normal">116</span>
-<span class="normal">117</span>
-<span class="normal">118</span>
-<span class="normal">119</span>
-<span class="normal">120</span>
-<span class="normal">121</span>
-<span class="normal">122</span>
-<span class="normal">123</span>
-<span class="normal">124</span>
-<span class="normal">125</span>
-<span class="normal">126</span>
-<span class="normal">127</span>
-<span class="normal">128</span>
-<span class="normal">129</span>
-<span class="normal">130</span>
-<span class="normal">131</span>
-<span class="normal">132</span>
-<span class="normal">133</span>
-<span class="normal">134</span>
-<span class="normal">135</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">135</span>
 <span class="normal">136</span>
 <span class="normal">137</span>
 <span class="normal">138</span>
@@ -5589,43 +5373,16 @@ setup_universal_logging(
 <span class="sd">    full codex_core logging stack.  Callers supply raw configuration</span>
 <span class="sd">    values directly rather than a settings object.</span>
 
-<span class="sd">    Sink layout after the call:</span>
-
-<span class="sd">    - **stdout** — colourised, ``console_level`` threshold.</span>
-<span class="sd">    - **&lt;log_dir&gt;/debug.log** — rotating plain text, ``file_level``</span>
-<span class="sd">      threshold, ``backtrace`` / ``diagnose`` enabled when</span>
-<span class="sd">      ``is_debug=True``.</span>
-<span class="sd">    - **&lt;log_dir&gt;/errors.json** — rotating JSON, ``ERROR`` threshold,</span>
-<span class="sd">      async-enqueued.</span>
-<span class="sd">    - **Root logger** — intercepted via :class:`InterceptHandler`.</span>
-
 <span class="sd">    Args:</span>
-<span class="sd">        log_dir: Directory where log files are created.  Created</span>
-<span class="sd">            recursively if it does not exist.</span>
-<span class="sd">        service_name: Label embedded in the console format string to</span>
-<span class="sd">            distinguish output from multiple co-running services.</span>
-<span class="sd">        console_level: Minimum level for stdout output (e.g. ``&quot;INFO&quot;``).</span>
-<span class="sd">        file_level: Minimum level for the debug log file</span>
-<span class="sd">            (e.g. ``&quot;DEBUG&quot;``).</span>
-<span class="sd">        rotation: Loguru rotation threshold string (e.g. ``&quot;10 MB&quot;`` or</span>
-<span class="sd">            ``&quot;1 day&quot;``).</span>
-<span class="sd">        is_debug: When ``True``, enables full ``backtrace`` and</span>
-<span class="sd">            ``diagnose`` output in the debug file sink.</span>
+<span class="sd">        log_dir: Directory where log files are created.</span>
+<span class="sd">        service_name: Label embedded in the console format string.</span>
+<span class="sd">        console_level: Minimum level for stdout output.</span>
+<span class="sd">        file_level: Minimum level for the debug log file.</span>
+<span class="sd">        rotation: Loguru rotation threshold string.</span>
+<span class="sd">        is_debug: When ``True``, enables ``backtrace`` and ``diagnose``.</span>
 
 <span class="sd">    Raises:</span>
-<span class="sd">        ImportError: If ``loguru`` is not installed in the environment.</span>
-
-<span class="sd">    Example:</span>
-<span class="sd">        ```python</span>
-<span class="sd">        from pathlib import Path</span>
-<span class="sd">        from codex_core.common.loguru_setup import setup_universal_logging</span>
-
-<span class="sd">        setup_universal_logging(</span>
-<span class="sd">            log_dir=Path(&quot;/var/log/myapp&quot;),</span>
-<span class="sd">            service_name=&quot;booking-worker&quot;,</span>
-<span class="sd">            is_debug=True,</span>
-<span class="sd">        )</span>
-<span class="sd">        ```</span>
+<span class="sd">        ImportError: If ``loguru`` is not installed.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">logger</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="s2">&quot;loguru is not installed. Please install it manually: pip install loguru&quot;</span><span class="p">)</span>
@@ -5633,33 +5390,27 @@ setup_universal_logging(
     <span class="n">logger</span><span class="o">.</span><span class="n">remove</span><span class="p">()</span>
     <span class="n">log_dir</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-    <span class="c1"># 1. Console output</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="n">patcher</span><span class="o">=</span><span class="n">_make_context_patcher</span><span class="p">(</span><span class="n">service_name</span><span class="p">))</span>
+
     <span class="n">logger</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
         <span class="n">sink</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">,</span>
         <span class="n">level</span><span class="o">=</span><span class="n">console_level</span><span class="p">,</span>
         <span class="n">colorize</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="nb">format</span><span class="o">=</span><span class="p">(</span>
-            <span class="s2">&quot;&lt;green&gt;{time:YYYY-MM-DD HH:mm:ss}&lt;/green&gt; | &quot;</span>
-            <span class="s2">&quot;&lt;level&gt;</span><span class="si">{level: &lt;8}</span><span class="s2">&lt;/level&gt; | &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;&lt;magenta&gt;</span><span class="si">{</span><span class="n">service_name</span><span class="si">}</span><span class="s2">&lt;/magenta&gt; | &quot;</span>
-            <span class="s2">&quot;&lt;cyan&gt;</span><span class="si">{name}</span><span class="s2">&lt;/cyan&gt;:&lt;cyan&gt;</span><span class="si">{function}</span><span class="s2">&lt;/cyan&gt;:&lt;cyan&gt;</span><span class="si">{line}</span><span class="s2">&lt;/cyan&gt; - &quot;</span>
-            <span class="s2">&quot;&lt;level&gt;</span><span class="si">{message}</span><span class="s2">&lt;/level&gt;&quot;</span>
-        <span class="p">),</span>
+        <span class="nb">filter</span><span class="o">=</span><span class="n">_healthcheck_filter</span><span class="p">,</span>
+        <span class="nb">format</span><span class="o">=</span><span class="n">_CONSOLE_FORMAT</span><span class="p">,</span>
     <span class="p">)</span>
 
-    <span class="c1"># 2. Debug file</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
         <span class="n">sink</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">log_dir</span> <span class="o">/</span> <span class="s2">&quot;debug.log&quot;</span><span class="p">),</span>
         <span class="n">level</span><span class="o">=</span><span class="n">file_level</span><span class="p">,</span>
         <span class="n">rotation</span><span class="o">=</span><span class="n">rotation</span><span class="p">,</span>
         <span class="n">compression</span><span class="o">=</span><span class="s2">&quot;zip&quot;</span><span class="p">,</span>
-        <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;{time:YYYY-MM-DD HH:mm:ss} | </span><span class="si">{level: &lt;8}</span><span class="s2"> | </span><span class="si">{name}</span><span class="s2">:</span><span class="si">{function}</span><span class="s2">:</span><span class="si">{line}</span><span class="s2"> - </span><span class="si">{message}</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="nb">format</span><span class="o">=</span><span class="n">_FILE_FORMAT</span><span class="p">,</span>
         <span class="n">enqueue</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="n">backtrace</span><span class="o">=</span><span class="n">is_debug</span><span class="p">,</span>
         <span class="n">diagnose</span><span class="o">=</span><span class="n">is_debug</span><span class="p">,</span>
     <span class="p">)</span>
 
-    <span class="c1"># 3. Errors file (JSON)</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
         <span class="n">sink</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">log_dir</span> <span class="o">/</span> <span class="s2">&quot;errors.json&quot;</span><span class="p">),</span>
         <span class="n">level</span><span class="o">=</span><span class="s2">&quot;ERROR&quot;</span><span class="p">,</span>
@@ -5669,10 +5420,9 @@ setup_universal_logging(
         <span class="n">enqueue</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span>
 
-    <span class="c1"># 4. Intercept standard logging</span>
     <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">handlers</span><span class="o">=</span><span class="p">[</span><span class="n">InterceptHandler</span><span class="p">()],</span> <span class="n">level</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Loguru setup complete for </span><span class="si">{</span><span class="n">service_name</span><span class="si">}</span><span class="s2">. Logs: </span><span class="si">{</span><span class="n">log_dir</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;LoguruSetupComplete log_dir=</span><span class="si">{}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">log_dir</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
             </details>
     </div>
@@ -5690,28 +5440,12 @@ setup_universal_logging(
 
     <div class="doc doc-contents ">
 
-        <p>Configure Loguru from a settings object conforming to :class:<code>LoggingSettingsProtocol</code>.</p>
-<p>Preferred entry-point for applications that use
-:class:<code>~codex_core.settings.BaseCommonSettings</code>.  Configuration
-is read from <em>settings</em> rather than raw arguments, enabling
-environment-driven log levels without code changes.</p>
-<p>PII masking is <strong>not</strong> handled here; it is the responsibility of
-:class:<code>~codex_core.core.base_dto.BaseDTO.__repr__</code> at the DTO
-level.  Do not log raw user input through this logger.</p>
+        <p>Configure Loguru from a settings object.</p>
+<p><strong>Dev</strong> (<code>settings.debug is True</code>): colourised console + file sinks.
+<strong>Prod</strong> (<code>settings.debug is False</code>): JSON-serialised stdout only.</p>
+<p>Both modes apply a patcher (service name + contextvars) and a
+healthcheck filter.</p>
 
-
-<details class="side-effects" open>
-  <summary>Side effects</summary>
-  <ul>
-<li>Removes all existing Loguru handlers (<code>logger.remove()</code>).</li>
-<li>Creates <code>&lt;settings.log_dir&gt;/&lt;service_name&gt;/</code> directory tree.</li>
-<li>Replaces the root <code>logging</code> handler with
-  :class:<code>InterceptHandler</code>.</li>
-<li>Optionally replaces handlers on loggers listed in
-  <em>intercept_loggers</em>.</li>
-<li>Optionally sets log levels on loggers listed in <em>log_levels</em>.</li>
-</ul>
-</details>
 
 <p><span class="doc-section-title">Parameters:</span></p>
     <table>
@@ -5733,9 +5467,7 @@ level.  Do not log raw user input through this logger.</p>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>Any object satisfying :class:<code>LoggingSettingsProtocol</code>.
-Typically a subclass of
-:class:<code>~codex_core.settings.BaseCommonSettings</code>.</p>
+                <p>Object satisfying :class:<code>LoggingSettingsProtocol</code>.</p>
               </div>
             </td>
             <td>
@@ -5751,8 +5483,7 @@ Typically a subclass of
             </td>
             <td>
               <div class="doc-md-description">
-                <p>Identifies the service in log output and is used
-as the leaf directory name under <code>settings.log_dir</code>.</p>
+                <p>Identifies the service in log output.</p>
               </div>
             </td>
             <td>
@@ -5768,9 +5499,8 @@ as the leaf directory name under <code>settings.log_dir</code>.</p>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>Optional list of logger names whose handlers
-should be replaced with :class:<code>InterceptHandler</code>
-(e.g. <code>["aiogram", "sqlalchemy.engine"]</code>).</p>
+                <p>Logger names whose handlers are replaced
+with :class:<code>InterceptHandler</code>.</p>
               </div>
             </td>
             <td>
@@ -5786,9 +5516,8 @@ should be replaced with :class:<code>InterceptHandler</code>
             </td>
             <td>
               <div class="doc-md-description">
-                <p>Optional mapping of <code>{logger_name: level_int}</code>
-for silencing verbose third-party libraries
-(e.g. <code>{"httpx": logging.WARNING}</code>).</p>
+                <p><code>{logger_name: level_int}</code> for silencing noisy
+libraries.</p>
               </div>
             </td>
             <td>
@@ -5814,7 +5543,7 @@ for silencing verbose third-party libraries
             </td>
             <td>
               <div class="doc-md-description">
-                <p>If <code>loguru</code> is not installed in the environment.</p>
+                <p>If <code>loguru</code> is not installed.</p>
               </div>
             </td>
           </tr>
@@ -5822,23 +5551,19 @@ for silencing verbose third-party libraries
     </table>
 
 
-<details class="example" open>
-  <summary>Example</summary>
-  <pre><code class="language-python">import logging
-from codex_core.common.loguru_setup import setup_logging
-
-setup_logging(
-    settings=app_settings,
-    service_name=&quot;api&quot;,
-    intercept_loggers=[&quot;uvicorn&quot;, &quot;sqlalchemy.engine&quot;],
-    log_levels={&quot;httpx&quot;: logging.WARNING},
-)
-</code></pre>
-</details>
-
             <details class="mkdocstrings-source">
               <summary>Source code in <code>src/codex_core/common/loguru_setup.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">233</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">223</span>
+<span class="normal">224</span>
+<span class="normal">225</span>
+<span class="normal">226</span>
+<span class="normal">227</span>
+<span class="normal">228</span>
+<span class="normal">229</span>
+<span class="normal">230</span>
+<span class="normal">231</span>
+<span class="normal">232</span>
+<span class="normal">233</span>
 <span class="normal">234</span>
 <span class="normal">235</span>
 <span class="normal">236</span>
@@ -5912,150 +5637,88 @@ setup_logging(
 <span class="normal">304</span>
 <span class="normal">305</span>
 <span class="normal">306</span>
-<span class="normal">307</span>
-<span class="normal">308</span>
-<span class="normal">309</span>
-<span class="normal">310</span>
-<span class="normal">311</span>
-<span class="normal">312</span>
-<span class="normal">313</span>
-<span class="normal">314</span>
-<span class="normal">315</span>
-<span class="normal">316</span>
-<span class="normal">317</span>
-<span class="normal">318</span>
-<span class="normal">319</span>
-<span class="normal">320</span>
-<span class="normal">321</span>
-<span class="normal">322</span>
-<span class="normal">323</span>
-<span class="normal">324</span>
-<span class="normal">325</span>
-<span class="normal">326</span>
-<span class="normal">327</span>
-<span class="normal">328</span>
-<span class="normal">329</span>
-<span class="normal">330</span>
-<span class="normal">331</span>
-<span class="normal">332</span>
-<span class="normal">333</span>
-<span class="normal">334</span>
-<span class="normal">335</span>
-<span class="normal">336</span>
-<span class="normal">337</span>
-<span class="normal">338</span>
-<span class="normal">339</span>
-<span class="normal">340</span>
-<span class="normal">341</span>
-<span class="normal">342</span>
-<span class="normal">343</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">setup_logging</span><span class="p">(</span>
+<span class="normal">307</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">setup_logging</span><span class="p">(</span>
     <span class="n">settings</span><span class="p">:</span> <span class="n">LoggingSettingsProtocol</span><span class="p">,</span>
     <span class="n">service_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">intercept_loggers</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">log_levels</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Configure Loguru from a settings object conforming to :class:`LoggingSettingsProtocol`.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Configure Loguru from a settings object.</span>
 
-<span class="sd">    Preferred entry-point for applications that use</span>
-<span class="sd">    :class:`~codex_core.settings.BaseCommonSettings`.  Configuration</span>
-<span class="sd">    is read from *settings* rather than raw arguments, enabling</span>
-<span class="sd">    environment-driven log levels without code changes.</span>
+<span class="sd">    **Dev** (``settings.debug is True``): colourised console + file sinks.</span>
+<span class="sd">    **Prod** (``settings.debug is False``): JSON-serialised stdout only.</span>
 
-<span class="sd">    PII masking is **not** handled here; it is the responsibility of</span>
-<span class="sd">    :class:`~codex_core.core.base_dto.BaseDTO.__repr__` at the DTO</span>
-<span class="sd">    level.  Do not log raw user input through this logger.</span>
-
-<span class="sd">    Side effects:</span>
-<span class="sd">        - Removes all existing Loguru handlers (``logger.remove()``).</span>
-<span class="sd">        - Creates ``&lt;settings.log_dir&gt;/&lt;service_name&gt;/`` directory tree.</span>
-<span class="sd">        - Replaces the root ``logging`` handler with</span>
-<span class="sd">          :class:`InterceptHandler`.</span>
-<span class="sd">        - Optionally replaces handlers on loggers listed in</span>
-<span class="sd">          *intercept_loggers*.</span>
-<span class="sd">        - Optionally sets log levels on loggers listed in *log_levels*.</span>
+<span class="sd">    Both modes apply a patcher (service name + contextvars) and a</span>
+<span class="sd">    healthcheck filter.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        settings: Any object satisfying :class:`LoggingSettingsProtocol`.</span>
-<span class="sd">            Typically a subclass of</span>
-<span class="sd">            :class:`~codex_core.settings.BaseCommonSettings`.</span>
-<span class="sd">        service_name: Identifies the service in log output and is used</span>
-<span class="sd">            as the leaf directory name under ``settings.log_dir``.</span>
-<span class="sd">        intercept_loggers: Optional list of logger names whose handlers</span>
-<span class="sd">            should be replaced with :class:`InterceptHandler`</span>
-<span class="sd">            (e.g. ``[&quot;aiogram&quot;, &quot;sqlalchemy.engine&quot;]``).</span>
-<span class="sd">        log_levels: Optional mapping of ``{logger_name: level_int}``</span>
-<span class="sd">            for silencing verbose third-party libraries</span>
-<span class="sd">            (e.g. ``{&quot;httpx&quot;: logging.WARNING}``).</span>
+<span class="sd">        settings: Object satisfying :class:`LoggingSettingsProtocol`.</span>
+<span class="sd">        service_name: Identifies the service in log output.</span>
+<span class="sd">        intercept_loggers: Logger names whose handlers are replaced</span>
+<span class="sd">            with :class:`InterceptHandler`.</span>
+<span class="sd">        log_levels: ``{logger_name: level_int}`` for silencing noisy</span>
+<span class="sd">            libraries.</span>
 
 <span class="sd">    Raises:</span>
-<span class="sd">        ImportError: If ``loguru`` is not installed in the environment.</span>
-
-<span class="sd">    Example:</span>
-<span class="sd">        ```python</span>
-<span class="sd">        import logging</span>
-<span class="sd">        from codex_core.common.loguru_setup import setup_logging</span>
-
-<span class="sd">        setup_logging(</span>
-<span class="sd">            settings=app_settings,</span>
-<span class="sd">            service_name=&quot;api&quot;,</span>
-<span class="sd">            intercept_loggers=[&quot;uvicorn&quot;, &quot;sqlalchemy.engine&quot;],</span>
-<span class="sd">            log_levels={&quot;httpx&quot;: logging.WARNING},</span>
-<span class="sd">        )</span>
-<span class="sd">        ```</span>
+<span class="sd">        ImportError: If ``loguru`` is not installed.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">logger</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="s2">&quot;loguru is not installed. Please install it manually: pip install loguru&quot;</span><span class="p">)</span>
 
     <span class="n">logger</span><span class="o">.</span><span class="n">remove</span><span class="p">()</span>
 
-    <span class="n">log_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">log_dir</span><span class="p">)</span> <span class="o">/</span> <span class="n">service_name</span>
-    <span class="n">log_dir</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="n">patcher</span><span class="o">=</span><span class="n">_make_context_patcher</span><span class="p">(</span><span class="n">service_name</span><span class="p">))</span>
 
-    <span class="c1"># Console</span>
-    <span class="n">logger</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
-        <span class="n">sink</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">,</span>
-        <span class="n">level</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">log_level_console</span><span class="p">,</span>
-        <span class="n">colorize</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="nb">format</span><span class="o">=</span><span class="p">(</span>
-            <span class="s2">&quot;&lt;green&gt;{time:YYYY-MM-DD HH:mm:ss}&lt;/green&gt; | &quot;</span>
-            <span class="s2">&quot;&lt;level&gt;</span><span class="si">{level: &lt;8}</span><span class="s2">&lt;/level&gt; | &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;&lt;magenta&gt;</span><span class="si">{</span><span class="n">service_name</span><span class="si">}</span><span class="s2">&lt;/magenta&gt; | &quot;</span>
-            <span class="s2">&quot;&lt;cyan&gt;</span><span class="si">{name}</span><span class="s2">&lt;/cyan&gt;:&lt;cyan&gt;</span><span class="si">{function}</span><span class="s2">&lt;/cyan&gt;:&lt;cyan&gt;</span><span class="si">{line}</span><span class="s2">&lt;/cyan&gt; - &quot;</span>
-            <span class="s2">&quot;&lt;level&gt;</span><span class="si">{message}</span><span class="s2">&lt;/level&gt;&quot;</span>
-        <span class="p">),</span>
-    <span class="p">)</span>
+    <span class="k">if</span> <span class="n">settings</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+        <span class="c1"># ── Dev: colourised console + file sinks ──</span>
+        <span class="n">log_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">log_dir</span><span class="p">)</span> <span class="o">/</span> <span class="n">service_name</span>
+        <span class="n">log_dir</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-    <span class="c1"># Debug file</span>
-    <span class="n">logger</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
-        <span class="n">sink</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">log_dir</span> <span class="o">/</span> <span class="s2">&quot;debug.log&quot;</span><span class="p">),</span>
-        <span class="n">level</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">log_level_file</span><span class="p">,</span>
-        <span class="n">rotation</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">log_rotation</span><span class="p">,</span>
-        <span class="n">compression</span><span class="o">=</span><span class="s2">&quot;zip&quot;</span><span class="p">,</span>
-        <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;{time:YYYY-MM-DD HH:mm:ss} | </span><span class="si">{level: &lt;8}</span><span class="s2"> | </span><span class="si">{name}</span><span class="s2">:</span><span class="si">{function}</span><span class="s2">:</span><span class="si">{line}</span><span class="s2"> - </span><span class="si">{message}</span><span class="s2">&quot;</span><span class="p">,</span>
-        <span class="n">enqueue</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="n">backtrace</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">debug</span><span class="p">,</span>
-        <span class="n">diagnose</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">debug</span><span class="p">,</span>
-    <span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
+            <span class="n">sink</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">,</span>
+            <span class="n">level</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">log_level_console</span><span class="p">,</span>
+            <span class="n">colorize</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="nb">filter</span><span class="o">=</span><span class="n">_healthcheck_filter</span><span class="p">,</span>
+            <span class="nb">format</span><span class="o">=</span><span class="n">_CONSOLE_FORMAT</span><span class="p">,</span>
+        <span class="p">)</span>
 
-    <span class="c1"># Errors file (JSON)</span>
-    <span class="n">logger</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
-        <span class="n">sink</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">log_dir</span> <span class="o">/</span> <span class="s2">&quot;errors.json&quot;</span><span class="p">),</span>
-        <span class="n">level</span><span class="o">=</span><span class="s2">&quot;ERROR&quot;</span><span class="p">,</span>
-        <span class="n">serialize</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-        <span class="n">rotation</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">log_rotation</span><span class="p">,</span>
-        <span class="n">compression</span><span class="o">=</span><span class="s2">&quot;zip&quot;</span><span class="p">,</span>
-        <span class="n">enqueue</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
+            <span class="n">sink</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">log_dir</span> <span class="o">/</span> <span class="s2">&quot;debug.log&quot;</span><span class="p">),</span>
+            <span class="n">level</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">log_level_file</span><span class="p">,</span>
+            <span class="n">rotation</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">log_rotation</span><span class="p">,</span>
+            <span class="n">compression</span><span class="o">=</span><span class="s2">&quot;zip&quot;</span><span class="p">,</span>
+            <span class="nb">format</span><span class="o">=</span><span class="n">_FILE_FORMAT</span><span class="p">,</span>
+            <span class="n">enqueue</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">backtrace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">diagnose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
+            <span class="n">sink</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">log_dir</span> <span class="o">/</span> <span class="s2">&quot;errors.json&quot;</span><span class="p">),</span>
+            <span class="n">level</span><span class="o">=</span><span class="s2">&quot;ERROR&quot;</span><span class="p">,</span>
+            <span class="n">serialize</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">rotation</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">log_rotation</span><span class="p">,</span>
+            <span class="n">compression</span><span class="o">=</span><span class="s2">&quot;zip&quot;</span><span class="p">,</span>
+            <span class="n">enqueue</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># ── Prod: JSON stdout only (Alloy / Loki / ELK ingestion) ──</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">add</span><span class="p">(</span>
+            <span class="n">sink</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">,</span>
+            <span class="n">level</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">log_level_console</span><span class="p">,</span>
+            <span class="n">serialize</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">colorize</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="nb">filter</span><span class="o">=</span><span class="n">_healthcheck_filter</span><span class="p">,</span>
+            <span class="n">enqueue</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="p">)</span>
 
     <span class="c1"># Intercept standard logging</span>
     <span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">handlers</span><span class="o">=</span><span class="p">[</span><span class="n">InterceptHandler</span><span class="p">()],</span> <span class="n">level</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-    <span class="c1"># Intercept specified loggers</span>
     <span class="k">if</span> <span class="n">intercept_loggers</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">intercept_loggers</span><span class="p">:</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">handlers</span> <span class="o">=</span> <span class="p">[</span><span class="n">InterceptHandler</span><span class="p">()]</span>
 
-    <span class="c1"># Set levels for noisy libraries</span>
     <span class="k">if</span> <span class="n">log_levels</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">level</span> <span class="ow">in</span> <span class="n">log_levels</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">level</span><span class="p">)</span>
