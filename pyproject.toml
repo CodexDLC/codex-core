@@ -21,7 +21,7 @@ classifiers = [
 ]
 dependencies = [
     "pydantic>=2.0,<3.0",
-    "pydantic-settings>=2.0",
+    "pydantic-settings>=2.14.2",
 ]
 
 [project.urls]
@@ -34,7 +34,7 @@ Issues = "https://github.com/codexdlc/codex-core/issues"
 [project.optional-dependencies]
 loguru = ["loguru>=0.7.0"]
 dev = [
-    "pytest>=8.0",
+    "pytest>=9.0.3",
     "pytest-asyncio>=0.23",
     "pytest-cov",
     "ruff>=0.4",
@@ -46,7 +46,7 @@ dev = [
 ]
 docs = [
     "mkdocs>=1.5",
-    "mkdocs-material>=9.0",
+    "mkdocs-material>=9.7.7",
     "mkdocstrings[python]>=0.24",
     "mkdocs-include-markdown-plugin",
     "mike>=2.0",

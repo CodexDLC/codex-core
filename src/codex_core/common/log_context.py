@@ -37,9 +37,7 @@ from typing import Any
 # Async-safe contextvars log context
 # ---------------------------------------------------------------------------
 
-_log_context: contextvars.ContextVar[dict[str, Any] | None] = contextvars.ContextVar(
-    "log_context", default=None
-)
+_log_context: contextvars.ContextVar[dict[str, Any] | None] = contextvars.ContextVar("log_context", default=None)
 
 
 def set_log_context(**kwargs: Any) -> None:

@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Refresh locked runtime, development, and documentation dependencies to patched releases identified by the release audit.
 - Use `None` as the default logging context value to satisfy the B039 lint rule.
 - Type the healthcheck filter with Loguru's record contract while keeping Loguru optional at runtime.
 - Restrict source distributions to project sources and documentation, excluding local environments and build caches.
