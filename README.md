@@ -23,6 +23,18 @@ pip install "codex-core[loguru]"
 
 Requires Python 3.12 or newer.
 
+## Optional agent skill
+
+Starting with version 0.5.0, the package includes an offline `codex-core` usage skill for coding agents. From the consumer project root, use the same Python environment that has the package installed:
+
+```bash
+python -m pip install "codex-core>=0.5.0"
+python -m codex_core.agent_skills install --project .
+python -m codex_core.agent_skills status --project .
+```
+
+`install` creates a managed copy under `.agents/skills/codex-core/` and a marked instruction in `AGENTS.md`. After upgrading the Python package, run `python -m codex_core.agent_skills update --project .` to refresh the skill. The installer refuses to discard local edits to managed files and preserves unrelated project content. See the [agent skill guide](docs/en/tasks/agent_skills.md) for the full lifecycle, removal, and recovery steps. The canonical editable source is `src/codex_core/agent_skills/resources/` in this repository.
+
 ## Development
 
 ```bash

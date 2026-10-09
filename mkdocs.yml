@@ -62,6 +62,7 @@ nav:
       - Overview: en/README.md
       - Tasks:
           - Getting Started: en/tasks/getting_started.md
+          - Agent Skill: en/tasks/agent_skills.md
       - Architecture:
           - Overview: en/architecture/README.md
           - Core (PII & DTO): en/architecture/platform/core.md
@@ -72,6 +73,7 @@ nav:
       - Обзор: ru/README.md
       - Задачи (Tasks):
           - Начало работы: ru/tasks/getting_started.md
+          - Навык для агентов: ru/tasks/agent_skills.md
       - Архитектура:
           - Обзор: ru/architecture/README.md
           - Core (PII и DTO): ru/architecture/platform/core.md

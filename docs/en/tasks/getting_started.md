@@ -27,6 +27,10 @@ If you want to use the pre-configured Loguru setup, install the optional extra:
 pip install "codex-core[loguru]"
 ```
 
+### Optional agent skill
+
+From version 0.5.0, install the offline coding-agent skill separately after installing the Python package. See [the agent skill guide](agent_skills.md) for installation, updates, removal, and recovery from local edits.
+
 ## First Steps
 
 ### 1. Create a BaseDTO

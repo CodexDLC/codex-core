@@ -5,6 +5,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+## [0.5.0] - 2026-10-09
+
+### Added
+
+- Packaged an optional `codex-core` agent usage skill with focused references and an offline install/update/delete/status tool.
+- Added source-repository maintenance guidance for the package and skill delivery.
+
+### Fixed
+
+- Use `None` as the default logging context value to satisfy the B039 lint rule.
+- Type the healthcheck filter with Loguru's record contract while keeping Loguru optional at runtime.
+- Restrict source distributions to project sources and documentation, excluding local environments and build caches.
+
+## [0.4.0] - 2026-05-20
+
+### Added
+
+- Added async-local logging context helpers and context injection for Loguru records.
+- Added production JSON stdout logging and healthcheck filtering to `setup_logging`.
+
 ## [0.3.0] - 2026-04-04
 
 ### Added
