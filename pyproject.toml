@@ -58,6 +58,23 @@ source = "vcs"
 [tool.hatch.build.targets.wheel]
 packages = ["src/codex_core"]
 
+[tool.hatch.build.targets.sdist]
+include = [
+    "/src",
+    "/tests",
+    "/docs",
+    "/tools",
+    "/README.md",
+    "/CHANGELOG.md",
+    "/pyproject.toml",
+    "/uv.lock",
+    "/mkdocs.yml",
+    "/AGENTS.md",
+    "/.python-version",
+    "/.pre-commit-config.yaml",
+    "/.github",
+]
+
 [tool.ruff]
 target-version = "py312"
 line-length = 120

@@ -42,7 +42,7 @@ from .log_context import get_log_context
 if TYPE_CHECKING:
     from types import FrameType
 
-    from loguru import Logger
+    from loguru import Logger, Record
 
 logger: "Logger | None"
 try:
@@ -68,7 +68,7 @@ def _make_context_patcher(service_name: str) -> Any:
     return _patcher
 
 
-def _healthcheck_filter(record: dict[str, Any]) -> bool:
+def _healthcheck_filter(record: "Record") -> bool:
     """Suppress log records tagged with ``healthcheck=True``."""
     return not record["extra"].get("healthcheck", False)
 
